@@ -102,19 +102,20 @@ function extraSpellRecords(className, spell, baseRecord) {
   return [{
     ...baseRecord,
     nom: "Main de Pandawa (Saoul)",
-    element: "Terre / Feu / Eau / Air",
-    min: 28,
-    max: 28,
-    critMin: 40,
-    critMax: 40,
+    element: "Neutre / Terre / Feu / Eau / Air",
+    min: 35,
+    max: 35,
+    critMin: 50,
+    critMax: 50,
     hits: [
+      { element: "neutre", min: 7, max: 7, critMin: 10, critMax: 10 },
       { element: "terre", min: 7, max: 7, critMin: 10, critMax: 10 },
       { element: "feu", min: 7, max: 7, critMin: 10, critMax: 10 },
       { element: "eau", min: 7, max: 7, critMin: 10, critMax: 10 },
       { element: "air", min: 7, max: 7, critMin: 10, critMax: 10 },
     ],
     sourceId: "24039-saoul",
-    note: "Additionne 4 lignes de dégâts : Terre, Feu, Eau et Air.\nNormal : 7 dommages par élément, 28 de base au total.\nCritique : 10 dommages par élément, 40 de base au total.",
+    note: "Additionne 5 lignes de dégâts : Neutre, Terre, Feu, Eau et Air.\nNormal : 7 dommages par élément, 35 de base au total.\nCritique : 10 dommages par élément, 50 de base au total.",
   }];
 }
 
