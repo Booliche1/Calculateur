@@ -15,6 +15,7 @@ const combatEls = {
   reset: document.querySelector("#combatReset"),
   clearLog: document.querySelector("#clearCombatLog"),
   journal: document.querySelector("#combatJournal"),
+  playerNames: [document.querySelector("#playerName0"), document.querySelector("#playerName1")],
   classSelects: [document.querySelector("#playerClass0"), document.querySelector("#playerClass1")],
   spellLists: [document.querySelector("#playerSpellList0"), document.querySelector("#playerSpellList1")],
   spellCounts: [document.querySelector("#playerSpellCount0"), document.querySelector("#playerSpellCount1")],
@@ -32,6 +33,10 @@ function normalizeCombat(value) {
 
 function combatSpellKey(spell) {
   return `${spell.classe}:${spell.sourceId || spell.nom}`;
+}
+
+function playerName(playerIndex) {
+  return combatEls.playerNames[playerIndex].value.trim() || `Joueur ${playerIndex + 1}`;
 }
 
 function combatElementClass(element) {
@@ -118,7 +123,7 @@ function renderClassSelects() {
 function renderCombatSpellList(playerIndex) {
   const player = combatState.players[playerIndex];
   const spells = combatSpells
-    .filter((spell) => spell.classe === player.className)
+    .filter((spell) => spell.classe === player.className && Number(spell.relance) > 0)
     .sort((a, b) => a.nom.localeCompare(b.nom));
 
   combatEls.spellCounts[playerIndex].textContent = `${spells.length} sorts`;
@@ -228,7 +233,7 @@ function renderCombatJournal() {
       const row = document.createElement("div");
       row.className = "journal-row";
       row.innerHTML = `
-        <strong>Joueur ${cast.playerIndex + 1}</strong>
+        <strong>${playerName(cast.playerIndex)}</strong>
         <span>${cast.name}</span>
         <em>${cast.relance ? `relance tour ${cast.readyTurn}` : "sans relance"}</em>
       `;
@@ -252,7 +257,7 @@ function renderEnemyAlerts() {
     const alert = document.createElement("div");
     alert.className = "enemy-ready-alert";
     alert.innerHTML = `
-      <span>Attention Joueur ${enemyIndex + 1}</span>
+      <span>Attention ${playerName(enemyIndex)}</span>
       <strong>${readySpells.map((cast) => cast.name).join(", ")}</strong>
       <em>peut etre relance ce tour</em>
     `;
@@ -281,6 +286,10 @@ combatEls.classSelects.forEach((select, playerIndex) => {
     combatState.players[playerIndex].className = select.value;
     renderCombat();
   });
+});
+
+combatEls.playerNames.forEach((input) => {
+  input.addEventListener("input", renderCombat);
 });
 
 combatEls.dropZones.forEach((zone, playerIndex) => {
