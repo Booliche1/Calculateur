@@ -875,6 +875,8 @@ const elements = {
   agilityInput: document.querySelector("#agilityInput"),
   powerInput: document.querySelector("#powerInput"),
   pushDamageInput: document.querySelector("#pushDamageInput"),
+  pushRecoilInput: document.querySelector("#pushRecoilInput"),
+  pushChainInput: document.querySelector("#pushChainInput"),
   flatDamageInput: document.querySelector("#flatDamageInput"),
   neutralDamageInput: document.querySelector("#neutralDamageInput"),
   earthDamageInput: document.querySelector("#earthDamageInput"),
@@ -930,6 +932,7 @@ function spellKey(spell) {
 }
 
 function asNumber(input) {
+  if (!input) return 0;
   return Number.parseFloat(input.value) || 0;
 }
 
@@ -1063,15 +1066,20 @@ function calculateDamage(base, forcedElement = selectedDamageElement(state.selec
 }
 
 function calculatePushDamage(spell) {
-  const pushedCells = Number(spell.poussee) || 0;
-  if (!pushedCells) return 0;
+  const maxPush = Number(spell.poussee) || 0;
+  if (!maxPush) return 0;
 
   const level = Math.min(200, Math.max(1, asNumber(elements.levelInput) || 200));
+  const recoil = Math.min(maxPush, Math.max(0, asNumber(elements.pushRecoilInput)));
+  if (!recoil) return 0;
+
   const pushDamage = asNumber(elements.pushDamageInput);
   const pushRes = asNumber(elements.pushResInput);
-  const damagePerCell = Math.max(0, 8 + level / 2 + pushDamage - pushRes);
+  const intermediaries = Math.max(0, asNumber(elements.pushChainInput));
+  const baseDamage = Math.max(0, 32 + level / 2 + pushDamage - pushRes);
+  const chainMultiplier = 1 / 2 ** intermediaries;
 
-  return Math.floor(damagePerCell * pushedCells);
+  return Math.floor(baseDamage * (recoil / 4) * chainMultiplier);
 }
 
 function bestElementForRange(spell, range) {
@@ -1212,15 +1220,15 @@ function renderSelectedSpell() {
 
   const pushDamage = calculatePushDamage(spell);
   const pushText = spell.poussee
-    ? `Poussee: ${pushDamage} (${spell.poussee} case${spell.poussee > 1 ? "s" : ""})`
+    ? `Poussee: ${pushDamage} (recul ${asNumber(elements.pushRecoilInput)} / ${spell.poussee})`
     : "";
   elements.pushDamageResult.textContent = pushText;
 
   if (!range) {
     elements.damageResult.textContent = pushDamage ? `${pushDamage}` : "Pas de degats";
     elements.damageResult.className = pushDamage ? "result-neutre" : "";
-    elements.damageFormula.textContent = pushDamage
-      ? `Dommages de poussee: floor((8 + niveau / 2 + dommages poussee - resistances poussee) x ${spell.poussee}).`
+  elements.damageFormula.textContent = pushDamage
+      ? `Dommages de poussee: floor((32 + niveau / 2 + dommages poussee - resistances poussee) x recul / 4 x 1/2^intermediaires).`
       : "Ce sort est marque comme utilitaire dans le tableau.";
     return;
   }
@@ -1238,7 +1246,7 @@ function renderSelectedSpell() {
     ? hits.map((hit) => `${hit.min}-${hit.max} ${hit.element}`).join(" + ")
     : `${range.min}-${range.max} en ${hits[0].element}`;
   elements.damageFormula.textContent = pushDamage
-    ? `Base ${hitSummary}, plus ${pushDamage} dommages de poussee. Total = degats du sort + floor((8 + niveau / 2 + dommages poussee - resistances poussee) x ${spell.poussee}).`
+    ? `Base ${hitSummary}, plus ${pushDamage} dommages de poussee. Do pou = floor((32 + niveau / 2 + dommages poussee - resistances poussee) x recul / 4 x 1/2^intermediaires).`
     : `Base ${hitSummary}. Chaque ligne utilise ses stats, dommages et resistances elementaires, puis le total est additionne.`;
 }
 
