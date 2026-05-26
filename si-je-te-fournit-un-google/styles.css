@@ -777,6 +777,14 @@ select:focus {
   scrollbar-color: var(--line-strong) transparent;
 }
 
+.combat-search-field {
+  margin-bottom: 10px;
+}
+
+.combat-search-field input {
+  min-height: 38px;
+}
+
 .combat-spell-card {
   display: grid;
   gap: 7px;

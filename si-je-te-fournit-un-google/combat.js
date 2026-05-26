@@ -16,6 +16,7 @@ const combatEls = {
   clearLog: document.querySelector("#clearCombatLog"),
   journal: document.querySelector("#combatJournal"),
   playerNames: [document.querySelector("#playerName0"), document.querySelector("#playerName1")],
+  searches: [document.querySelector("#playerSearch0"), document.querySelector("#playerSearch1")],
   classSelects: [document.querySelector("#playerClass0"), document.querySelector("#playerClass1")],
   spellLists: [document.querySelector("#playerSpellList0"), document.querySelector("#playerSpellList1")],
   spellCounts: [document.querySelector("#playerSpellCount0"), document.querySelector("#playerSpellCount1")],
@@ -122,8 +123,13 @@ function renderClassSelects() {
 
 function renderCombatSpellList(playerIndex) {
   const player = combatState.players[playerIndex];
+  const query = normalizeCombat(combatEls.searches[playerIndex].value);
   const spells = combatSpells
-    .filter((spell) => spell.classe === player.className && Number(spell.relance) > 0)
+    .filter((spell) =>
+      spell.classe === player.className &&
+      Number(spell.relance || 0) > 0 &&
+      normalizeCombat(spell.nom).includes(query)
+    )
     .sort((a, b) => a.nom.localeCompare(b.nom));
 
   combatEls.spellCounts[playerIndex].textContent = `${spells.length} sorts`;
@@ -289,6 +295,10 @@ combatEls.classSelects.forEach((select, playerIndex) => {
 });
 
 combatEls.playerNames.forEach((input) => {
+  input.addEventListener("input", renderCombat);
+});
+
+combatEls.searches.forEach((input) => {
   input.addEventListener("input", renderCombat);
 });
 
