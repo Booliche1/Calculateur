@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dofus - Calculateur</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Prototype Ecaflip</p>
+          <h1>Calculateur de degats</h1>
+        </div>
+        <nav class="page-tabs" aria-label="Navigation">
+          <a href="index.html">Relances</a>
+          <a class="active" href="calculateur.html">Calculateur</a>
+        </nav>
+      </header>
+
+      <section class="filters">
+        <label class="search-field">
+          <span>Rechercher un sort</span>
+          <input id="searchInput" type="search" placeholder="Nom du sort" autocomplete="off" />
+        </label>
+        <label>
+          <span>Classe</span>
+          <select id="classFilter">
+            <option value="all">Toutes</option>
+          </select>
+        </label>
+        <label>
+          <span>Element</span>
+          <select id="elementFilter">
+            <option value="all">Tous</option>
+          </select>
+        </label>
+        <label>
+          <span>Tri</span>
+          <select id="sortMode">
+            <option value="name">Nom</option>
+            <option value="damage">Degats max</option>
+            <option value="cooldown">Relance</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="calculator-layout">
+        <aside class="sidebar compact-sidebar" aria-label="Liste des sorts">
+          <div class="list-heading">
+            <h2>Sorts</h2>
+            <span id="spellCount"></span>
+          </div>
+          <div class="spell-list" id="spellList"></div>
+        </aside>
+
+        <section class="workspace calculator-workspace" aria-live="polite">
+          <div class="spell-header">
+            <div>
+              <p id="selectedClass" class="eyebrow">Ecaflip</p>
+              <h2 id="selectedName"></h2>
+            </div>
+            <div class="toggle">
+              <button id="normalMode" type="button" class="active">Normal</button>
+              <button id="critMode" type="button">Critique</button>
+            </div>
+          </div>
+          <p class="spell-note" id="spellNote"></p>
+
+          <section class="damage-panel">
+            <div class="calculator-sections">
+              <section class="calc-box character-box">
+                <h4>Personnage</h4>
+                <div class="calc-table">
+                  <label><input id="levelInput" type="number" min="1" max="200" value="200" /><span>Niveau</span></label>
+                  <label><input id="pushDamageInput" type="number" value="0" /><span>Dommages poussee</span></label>
+                  <label><input id="forceInput" type="number" value="0" /><span>Force</span></label>
+                  <label><input id="critChanceInput" type="number" value="0" /><span>% Critique</span></label>
+                  <label><input id="intelligenceInput" type="number" value="0" /><span>Intelligence</span></label>
+                  <label><input id="finalDamageInput" type="number" value="0" /><span>% Dommages finaux</span></label>
+                  <label><input id="chanceInput" type="number" value="0" /><span>Chance</span></label>
+                  <label><input id="spellDamageInput" type="number" value="0" /><span>% Dommages sorts</span></label>
+                  <label><input id="agilityInput" type="number" value="0" /><span>Agilite</span></label>
+                  <label><input id="weaponDamageInput" type="number" value="0" /><span>% Dommages armes</span></label>
+                  <label><input id="powerInput" type="number" value="0" /><span>Puissance</span></label>
+                  <label><input id="distanceDamageInput" type="number" value="0" /><span>% Dommages distance</span></label>
+                  <label><input id="flatDamageInput" type="number" value="0" /><span>Dommages</span></label>
+                  <label><input id="meleeDamageInput" type="number" value="0" /><span>% Dommages melee</span></label>
+                  <label><input id="neutralDamageInput" type="number" value="0" /><span>Dommages neutre</span></label>
+                  <label>
+                    <select id="hitTypeInput">
+                      <option value="spell">Sort</option>
+                      <option value="weapon">Arme</option>
+                    </select>
+                    <span>Type de coup</span>
+                  </label>
+                  <label><input id="earthDamageInput" type="number" value="0" /><span>Dommages terre</span></label>
+                  <label>
+                    <select id="rangeTypeInput">
+                      <option value="distance">Distance</option>
+                      <option value="melee">Melee</option>
+                    </select>
+                    <span>Distance du coup</span>
+                  </label>
+                  <label><input id="fireDamageInput" type="number" value="0" /><span>Dommages feu</span></label>
+                  <label><input id="centerDistanceInput" type="number" min="0" max="10" value="0" /><span>Eloignement zone</span></label>
+                  <label><input id="waterDamageInput" type="number" value="0" /><span>Dommages eau</span></label>
+                  <label>
+                    <select id="portalInput">
+                      <option value="0">Aucun</option>
+                      <option value="25">1 portail</option>
+                      <option value="50">2 portails</option>
+                      <option value="75">3 portails</option>
+                      <option value="100">4 portails</option>
+                    </select>
+                    <span>Portail</span>
+                  </label>
+                  <label><input id="airDamageInput" type="number" value="0" /><span>Dommages air</span></label>
+                  <label><input id="redirectInput" type="number" value="0" /><span>Redirection</span></label>
+                  <label><input id="critDamageInput" type="number" value="0" /><span>Dommages critiques</span></label>
+                  <label>
+                    <select id="areaFalloffInput">
+                      <option value="no">Non</option>
+                      <option value="yes">Oui</option>
+                    </select>
+                    <span>Sort de zone</span>
+                  </label>
+                  <label>
+                    <select id="damageElementInput">
+                      <option value="auto">Auto</option>
+                      <option value="neutre">Neutre</option>
+                      <option value="terre">Terre</option>
+                      <option value="feu">Feu</option>
+                      <option value="eau">Eau</option>
+                      <option value="air">Air</option>
+                    </select>
+                    <span>Element calcule</span>
+                  </label>
+                </div>
+              </section>
+
+              <section class="calc-box target-box">
+                <h4>Cible</h4>
+                <div class="calc-table">
+                  <label><input id="neutralFlatResInput" type="number" value="0" /><span>Resistances fixes neutre</span></label>
+                  <label><input id="neutralPercentResInput" type="number" value="0" /><span>% Resistances neutre</span></label>
+                  <label><input id="earthFlatResInput" type="number" value="0" /><span>Resistances fixes terre</span></label>
+                  <label><input id="earthPercentResInput" type="number" value="0" /><span>% Resistances terre</span></label>
+                  <label><input id="fireFlatResInput" type="number" value="0" /><span>Resistances fixes feu</span></label>
+                  <label><input id="firePercentResInput" type="number" value="0" /><span>% Resistances feu</span></label>
+                  <label><input id="waterFlatResInput" type="number" value="0" /><span>Resistances fixes eau</span></label>
+                  <label><input id="waterPercentResInput" type="number" value="0" /><span>% Resistances eau</span></label>
+                  <label><input id="airFlatResInput" type="number" value="0" /><span>Resistances fixes air</span></label>
+                  <label><input id="airPercentResInput" type="number" value="0" /><span>% Resistances air</span></label>
+                  <label><input id="critResInput" type="number" value="0" /><span>Resistances critiques</span></label>
+                  <label><input id="sufferedDamageInput" type="number" value="100" /><span>% Dommages subis</span></label>
+                  <label><input id="pushResInput" type="number" value="0" /><span>Resistances poussee</span></label>
+                  <label><span></span><span></span></label>
+                  <label><input id="spellResInput" type="number" value="0" /><span>Res fixes sorts</span></label>
+                  <label><input id="distanceResInput" type="number" value="0" /><span>% Resistances distance</span></label>
+                  <label><input id="weaponResInput" type="number" value="0" /><span>Res fixes armes</span></label>
+                  <label><input id="meleeResInput" type="number" value="0" /><span>% Resistances melee</span></label>
+                </div>
+              </section>
+            </div>
+
+            <div class="result-strip">
+              <div>
+                <span>Degats estimes</span>
+                <strong id="damageResult"></strong>
+                <small id="pushDamageResult"></small>
+              </div>
+              <p id="damageFormula"></p>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <section class="hidden-support" aria-hidden="true">
+        <strong id="turnNumber">1</strong>
+        <strong id="availability"></strong>
+        <strong id="cooldown"></strong>
+        <strong id="castsPerTurn"></strong>
+        <strong id="pushback"></strong>
+        <button id="castSpell" type="button">Lancer</button>
+        <button id="prevTurn" type="button">Precedent</button>
+        <button id="nextTurn" type="button">Suivant</button>
+        <button id="resetFight" type="button">Reset</button>
+        <button id="clearCooldowns" type="button">Vider</button>
+        <div id="cooldownTimeline"></div>
+      </section>
+
+      <footer class="data-credit">
+        Donnees issues de DofusDB. Utilisation soumise a la LPNC-IA 1.0.
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
