@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dofus - Relances</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Prototype Ecaflip</p>
+          <h1>Suivi des relances</h1>
+        </div>
+        <nav class="page-tabs" aria-label="Navigation">
+          <a class="active" href="index.html">Relances</a>
+          <a href="calculateur.html">Calculateur</a>
+        </nav>
+      </header>
+
+      <section class="turn-dock" aria-label="Gestion des tours">
+        <button class="icon-button" id="prevTurn" type="button" title="Tour precedent">←</button>
+        <div class="turn-counter">
+          <span>Tour actuel</span>
+          <strong id="turnNumber">1</strong>
+        </div>
+        <button class="primary-button" id="nextTurn" type="button">Tour suivant</button>
+        <button class="ghost-button" id="resetFight" type="button">Reinitialiser</button>
+      </section>
+
+      <section class="filters">
+        <label class="search-field">
+          <span>Rechercher</span>
+          <input id="searchInput" type="search" placeholder="Nom du sort" autocomplete="off" />
+        </label>
+        <label>
+          <span>Classe</span>
+          <select id="classFilter">
+            <option value="all">Toutes</option>
+          </select>
+        </label>
+        <label>
+          <span>Element</span>
+          <select id="elementFilter">
+            <option value="all">Tous</option>
+          </select>
+        </label>
+        <label>
+          <span>Tri</span>
+          <select id="sortMode">
+            <option value="name">Nom</option>
+            <option value="damage">Degats max</option>
+            <option value="cooldown">Relance</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="two-column">
+        <aside class="sidebar" aria-label="Liste des sorts">
+          <div class="list-heading">
+            <h2>Sorts</h2>
+            <span id="spellCount"></span>
+          </div>
+          <div class="spell-list" id="spellList"></div>
+        </aside>
+
+        <section class="workspace relance-workspace" aria-live="polite">
+          <div class="spell-header">
+            <div>
+              <p id="selectedClass" class="eyebrow">Ecaflip</p>
+              <h2 id="selectedName"></h2>
+            </div>
+            <button class="primary-button" id="castSpell" type="button">Lancer le sort</button>
+          </div>
+          <p class="spell-note" id="spellNote"></p>
+
+          <div class="status-grid">
+            <div class="metric">
+              <span>Disponibilite</span>
+              <strong id="availability"></strong>
+            </div>
+            <div class="metric">
+              <span>Relance</span>
+              <strong id="cooldown"></strong>
+            </div>
+            <div class="metric">
+              <span>Lancers / tour</span>
+              <strong id="castsPerTurn"></strong>
+            </div>
+            <div class="metric">
+              <span>Poussee</span>
+              <strong id="pushback"></strong>
+            </div>
+          </div>
+
+          <section class="timeline-panel">
+            <div class="panel-title">
+              <h3>Sorts en relance</h3>
+              <button class="ghost-button" id="clearCooldowns" type="button">Vider</button>
+            </div>
+            <div id="cooldownTimeline" class="timeline"></div>
+          </section>
+        </section>
+      </section>
+
+      <section class="hidden-support" aria-hidden="true">
+        <button id="normalMode" type="button" class="active">Normal</button>
+        <button id="critMode" type="button">Critique</button>
+        <input id="forceInput" type="number" value="0" />
+        <input id="intelligenceInput" type="number" value="0" />
+        <input id="chanceInput" type="number" value="0" />
+        <input id="agilityInput" type="number" value="0" />
+        <input id="powerInput" type="number" value="0" />
+        <input id="flatDamageInput" type="number" value="0" />
+        <input id="neutralDamageInput" type="number" value="0" />
+        <input id="earthDamageInput" type="number" value="0" />
+        <input id="fireDamageInput" type="number" value="0" />
+        <input id="waterDamageInput" type="number" value="0" />
+        <input id="airDamageInput" type="number" value="0" />
+        <input id="critDamageInput" type="number" value="0" />
+        <input id="critChanceInput" type="number" value="0" />
+        <input id="finalDamageInput" type="number" value="0" />
+        <input id="spellDamageInput" type="number" value="0" />
+        <input id="weaponDamageInput" type="number" value="0" />
+        <input id="distanceDamageInput" type="number" value="0" />
+        <input id="meleeDamageInput" type="number" value="0" />
+        <select id="hitTypeInput"><option value="spell">Sort</option></select>
+        <select id="rangeTypeInput"><option value="distance">Distance</option></select>
+        <input id="centerDistanceInput" type="number" value="0" />
+        <select id="portalInput"><option value="0">Aucun</option></select>
+        <input id="redirectInput" type="number" value="0" />
+        <select id="areaFalloffInput"><option value="no">Non</option></select>
+        <select id="damageElementInput"><option value="auto">Auto</option></select>
+        <input id="neutralFlatResInput" type="number" value="0" />
+        <input id="neutralPercentResInput" type="number" value="0" />
+        <input id="earthFlatResInput" type="number" value="0" />
+        <input id="earthPercentResInput" type="number" value="0" />
+        <input id="fireFlatResInput" type="number" value="0" />
+        <input id="firePercentResInput" type="number" value="0" />
+        <input id="waterFlatResInput" type="number" value="0" />
+        <input id="waterPercentResInput" type="number" value="0" />
+        <input id="airFlatResInput" type="number" value="0" />
+        <input id="airPercentResInput" type="number" value="0" />
+        <input id="critResInput" type="number" value="0" />
+        <input id="sufferedDamageInput" type="number" value="100" />
+        <input id="spellResInput" type="number" value="0" />
+        <input id="distanceResInput" type="number" value="0" />
+        <input id="weaponResInput" type="number" value="0" />
+        <input id="meleeResInput" type="number" value="0" />
+        <strong id="damageResult"></strong>
+        <p id="damageFormula"></p>
+      </section>
+
+      <footer class="data-credit">
+        Donnees issues de DofusDB. Utilisation soumise a la LPNC-IA 1.0.
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
