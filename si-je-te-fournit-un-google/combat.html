@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dofus - Combat</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Dofus Damage Lab</p>
+          <h1>Combat 1v1</h1>
+        </div>
+        <nav class="page-tabs" aria-label="Navigation">
+          <a href="index.html">Relances</a>
+          <a href="calculateur.html">Calculateur</a>
+          <a class="active" href="combat.html">Combat</a>
+        </nav>
+      </header>
+
+      <section class="turn-dock combat-turn" aria-label="Gestion du combat">
+        <button class="icon-button" id="combatPrevTurn" type="button" title="Tour precedent">‹</button>
+        <label class="turn-input">
+          <span>Tour actuel</span>
+          <input id="combatTurnInput" type="number" min="1" value="1" />
+        </label>
+        <button class="primary-button" id="combatNextTurn" type="button">Tour suivant</button>
+        <button class="ghost-button" id="combatReset" type="button">Reinitialiser</button>
+      </section>
+
+      <section class="combat-layout" aria-label="Tableaux de combat">
+        <article class="combat-board" data-player="0">
+          <div class="combat-board-header">
+            <div>
+              <p class="eyebrow">Joueur 1</p>
+              <h2>Tableau gauche</h2>
+            </div>
+            <label>
+              <span>Classe</span>
+              <select id="playerClass0"></select>
+            </label>
+          </div>
+          <div class="combat-columns">
+            <section>
+              <div class="list-heading compact-heading">
+                <h3>Sorts disponibles</h3>
+                <span id="playerSpellCount0"></span>
+              </div>
+              <div class="combat-spell-list" id="playerSpellList0"></div>
+            </section>
+            <section>
+              <div class="drop-zone" id="playerDrop0" data-player="0">
+                <span>Glisser un sort ici</span>
+                <strong>Lances tour actuel</strong>
+                <div id="playerCurrent0" class="cast-list"></div>
+              </div>
+              <div class="cooldown-panel">
+                <h3>Relances</h3>
+                <div id="playerCooldowns0" class="cooldown-list"></div>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <article class="combat-board" data-player="1">
+          <div class="combat-board-header">
+            <div>
+              <p class="eyebrow">Joueur 2</p>
+              <h2>Tableau droite</h2>
+            </div>
+            <label>
+              <span>Classe</span>
+              <select id="playerClass1"></select>
+            </label>
+          </div>
+          <div class="combat-columns">
+            <section>
+              <div class="list-heading compact-heading">
+                <h3>Sorts disponibles</h3>
+                <span id="playerSpellCount1"></span>
+              </div>
+              <div class="combat-spell-list" id="playerSpellList1"></div>
+            </section>
+            <section>
+              <div class="drop-zone" id="playerDrop1" data-player="1">
+                <span>Glisser un sort ici</span>
+                <strong>Lances tour actuel</strong>
+                <div id="playerCurrent1" class="cast-list"></div>
+              </div>
+              <div class="cooldown-panel">
+                <h3>Relances</h3>
+                <div id="playerCooldowns1" class="cooldown-list"></div>
+              </div>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <section class="combat-journal-panel">
+        <div class="panel-title">
+          <h2>Journal du combat</h2>
+          <button class="ghost-button" id="clearCombatLog" type="button">Vider le journal</button>
+        </div>
+        <div id="combatJournal" class="combat-journal"></div>
+      </section>
+
+      <footer class="data-credit">
+        Donnees issues de DofusDB. Utilisation soumise a la LPNC-IA 1.0.
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="combat.js"></script>
+  </body>
+</html>

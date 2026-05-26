@@ -843,6 +843,8 @@
   { classe: "Forgelance", nom: "Holmgang", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 4, poussee: 0, pa: 4, poMin: 0, poMax: 0, zone: true, sourceId: 23846, note: "Rappelle la Lance et remplace la Garde par le Holmgang :\n• Rend le lanceur Indéplaçable.\n• Réduit les dommages subis à distance.\n• Pose un glyphe-aura qui attire les ennemis qui le traversent ou qui en sortent et leur occasionne des dommages dans le meilleur élément d\u0027attaque du lanceur (une fois par ennemi par tour).\n\nTermine le tour en cours du lanceur." },
 ];
 
+window.DOFUS_SPELLS = spells;
+
 const state = {
   selected: spells.find((spell) => spell.max !== null) ?? spells[0],
   turn: 1,
@@ -1315,49 +1317,51 @@ function render() {
   renderTimeline();
 }
 
-renderClassOptions();
-renderElementOptions();
-render();
-
-elements.searchInput.addEventListener("input", renderSpellList);
-elements.classFilter.addEventListener("change", () => {
-  const visible = filteredSpells();
-  if (visible.length > 0 && !visible.some((spell) => spellKey(spell) === spellKey(state.selected))) {
-    state.selected = visible[0];
-  }
+if (elements.spellList && elements.searchInput && elements.damageResult) {
+  renderClassOptions();
+  renderElementOptions();
   render();
-});
-elements.elementFilter.addEventListener("change", renderSpellList);
-elements.sortMode.addEventListener("change", renderSpellList);
-elements.castSpell.addEventListener("click", castSelectedSpell);
-elements.nextTurn.addEventListener("click", nextTurn);
-elements.prevTurn.addEventListener("click", prevTurn);
-elements.resetFight.addEventListener("click", resetFight);
-elements.clearCooldowns.addEventListener("click", () => {
-  state.cooldowns.clear();
-  render();
-});
 
-Object.values(elements)
-  .filter((element) => element instanceof HTMLInputElement || element instanceof HTMLSelectElement)
-  .forEach((input) => {
-    input.addEventListener("input", renderSelectedSpell);
-    input.addEventListener("change", renderSelectedSpell);
+  elements.searchInput.addEventListener("input", renderSpellList);
+  elements.classFilter.addEventListener("change", () => {
+    const visible = filteredSpells();
+    if (visible.length > 0 && !visible.some((spell) => spellKey(spell) === spellKey(state.selected))) {
+      state.selected = visible[0];
+    }
+    render();
+  });
+  elements.elementFilter.addEventListener("change", renderSpellList);
+  elements.sortMode.addEventListener("change", renderSpellList);
+  elements.castSpell.addEventListener("click", castSelectedSpell);
+  elements.nextTurn.addEventListener("click", nextTurn);
+  elements.prevTurn.addEventListener("click", prevTurn);
+  elements.resetFight.addEventListener("click", resetFight);
+  elements.clearCooldowns.addEventListener("click", () => {
+    state.cooldowns.clear();
+    render();
   });
 
-elements.normalMode.addEventListener("click", () => {
-  state.crit = false;
-  elements.normalMode.classList.add("active");
-  elements.critMode.classList.remove("active");
-  renderSelectedSpell();
-});
+  Object.values(elements)
+    .filter((element) => element instanceof HTMLInputElement || element instanceof HTMLSelectElement)
+    .forEach((input) => {
+      input.addEventListener("input", renderSelectedSpell);
+      input.addEventListener("change", renderSelectedSpell);
+    });
 
-elements.critMode.addEventListener("click", () => {
-  state.crit = true;
-  elements.critMode.classList.add("active");
-  elements.normalMode.classList.remove("active");
-  renderSelectedSpell();
-});
+  elements.normalMode.addEventListener("click", () => {
+    state.crit = false;
+    elements.normalMode.classList.add("active");
+    elements.critMode.classList.remove("active");
+    renderSelectedSpell();
+  });
+
+  elements.critMode.addEventListener("click", () => {
+    state.crit = true;
+    elements.critMode.classList.add("active");
+    elements.normalMode.classList.remove("active");
+    renderSelectedSpell();
+  });
+}
 
 
 
