@@ -483,7 +483,8 @@
   { classe: "Sacrieur", nom: "Châtiment", element: "Neutre", min: 15, max: 15, critMin: 15, critMax: 15, parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 0, zone: true, sourceId: 12760, note: "Occasionne des dommages Neutre aux ennemis en zone selon la vie restante du lanceur et en sacrifiant une partie de sa vie." },
   { classe: "Sacrieur", nom: "Rituel de Jashin", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 4, poussee: 0, pa: 3, poMin: 1, poMax: 10, zone: true, sourceId: 14000, note: "Applique l\u0027état Rituel de Jashin sur l\u0027ennemi ciblé et pose un glyphe-aura sous le lanceur qui lui applique l\u0027état et le rend Intaclable.\nTant que le lanceur et la cible sont dans cet état, renvoie la totalité des dommages subis par le lanceur à la cible, et inversement." },
   { classe: "Sacrieur", nom: "Folie Sanguinaire", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 0, zone: false, sourceId: 12740, note: "Vole de la vie dans le meilleur élément du lanceur en zone.\nLes dommages de zone ne sont pas dégressifs." },
-  { classe: "Pandawa", nom: "Gueule de Bois", element: "Terre", min: 24, max: 37, critMin: 29, critMax: 42, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 3, zone: true, sourceId: 12803, note: "Rend le lanceur Sobre et occasionne des dommages Terre.\nLes dommages sont plus importants si le lanceur est sorti de l\u0027état Saoul pendant le tour en cours." },
+  { classe: "Pandawa", nom: "Gueule de Bois", element: "Terre", min: 24, max: 27, critMin: 29, critMax: 32, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 3, zone: true, sourceId: "12803-normal", note: "24 à 27 dommages Terre.\nCritique : 29 à 32 dommages Terre.\n\nRend le lanceur Sobre." },
+  { classe: "Pandawa", nom: "Gueule de Bois (Sortie Saoul)", element: "Terre", min: 34, max: 37, critMin: 39, critMax: 42, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 3, zone: true, sourceId: "12803-sortie-saoul", note: "34 à 37 dommages Terre si le lanceur est sorti de l'état Saoul pendant le tour.\nCritique : 39 à 42 dommages Terre." },
   { classe: "Pandawa", nom: "Paume Explosive", element: "Feu", min: 20, max: 22, critMin: 24, critMax: 26, parTour: 3, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 5, zone: true, sourceId: 12781, note: "Occasionne des dommages Feu.\nN\u0027affecte pas le lanceur.\n\nModifie le sort selon l\u0027état du lanceur après un lancer :\n• Le coût en PA du sort est augmenté après le premier lancer.\n• Sobre : les dommages s\u0027appliquent en zone.\n• Saoul : les dommages du sort sont augmentés.\n\nChaque effet est cumulable une fois." },
   { classe: "Pandawa", nom: "Schnaps", element: "Air", min: 21, max: 24, critMin: 25, critMax: 29, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 8, zone: true, sourceId: 12782, note: "Occasionne des dommages Air et applique des effets sur les cibles selon l\u0027état du lanceur en zone :\n• Sobre : retire du Retrait PA et PM.\n• Saoul : réduit les Résistances Poussée.\n\nN\u0027affecte pas le lanceur." },
   { classe: "Pandawa", nom: "Ethylo", element: "Eau", min: 25, max: 28, critMin: 30, critMax: 34, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 6, zone: true, sourceId: 12791, note: "Occasionne des dommages Eau et applique des effets selon l\u0027état du lanceur :\n• Sobre : augmente la Portée du lanceur.\n• Saoul : retire de la Portée à la cible." },
@@ -499,10 +500,12 @@
   { classe: "Pandawa", nom: "Souillure", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 3, zone: true, sourceId: 12792, note: "Réduit la durée des effets sur la cible et retire de la Puissance aux ennemis." },
   { classe: "Pandawa", nom: "Fermentation", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 3, zone: true, sourceId: 12819, note: "Applique un bouclier sur l\u0027allié ciblé immédiatement et au tour suivant." },
   { classe: "Pandawa", nom: "Éviction", element: "Terre", min: 15, max: 17, critMin: 19, critMax: 21, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 1, zone: true, sourceId: 12790, note: "Applique des effets selon l\u0027état du lanceur et occasionne des dommages Terre aux ennemis.\n• Sobre : téléporte le lanceur symétriquement par rapport à la cible.\n• Saoul : téléporte la cible symétriquement par rapport au lanceur et occasionne les dommages en zone." },
-  { classe: "Pandawa", nom: "Flasque Explosive", element: "Feu", min: 18, max: 25, critMin: 22, critMax: 30, parTour: 1, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 8, zone: true, sourceId: 12796, note: "Occasionne des dommages Feu en zone.\nN\u0027affecte pas le lanceur.\n\nLa portée du sort est réduite de moitié mais les dommages sont plus importants si le lanceur est Saoul." },
+  { classe: "Pandawa", nom: "Flasque Explosive (Sobre)", element: "Feu", min: 18, max: 20, critMin: 22, critMax: 24, parTour: 1, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 8, zone: true, sourceId: "12796-sobre", note: "État Sobre : 18 à 20 dommages Feu en zone.\nCritique : 22 à 24 dommages Feu.\nN'affecte pas le lanceur." },
+  { classe: "Pandawa", nom: "Flasque Explosive (Saoul)", element: "Feu", min: 22, max: 25, critMin: 26, critMax: 30, parTour: 1, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 8, zone: true, sourceId: "12796-saoul", note: "État Saoul : 22 à 25 dommages Feu en zone.\nCritique : 26 à 30 dommages Feu.\nLa portée du sort est réduite de moitié." },
   { classe: "Pandawa", nom: "Lait de Bambou", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 2, poMin: 0, poMax: 0, zone: true, sourceId: 24038, note: "Réduit la durée des effets sur le lanceur et le rend Sobre." },
   { classe: "Pandawa", nom: "Nausée", element: "Air", min: 15, max: 17, critMin: 18, critMax: 20, parTour: 2, relance: 0, poussee: 1, pa: 2, poMin: 1, poMax: 8, zone: true, sourceId: 12814, note: "Applique des effets selon l\u0027état du lanceur et occasionne des dommages Air aux ennemis :\n• Sobre : éloigne le lanceur de la cible.\n• Saoul : repousse la cible." },
-  { classe: "Pandawa", nom: "Vague à Lame", element: "Eau", min: 36, max: 48, critMin: 43, critMax: 56, parTour: 2, relance: 0, poussee: 1, pa: 4, poMin: 1, poMax: 10, zone: true, sourceId: 12794, note: "Occasionne des dommages Eau aux ennemis et repousse les cibles en zone.\nLa poussée est appliquée uniquement si le lanceur est Sobre.\n\nLa portée du sort est réduite de moitié mais les dommages sont plus importants si le lanceur est Saoul." },
+  { classe: "Pandawa", nom: "Vague à Lame (Sobre)", element: "Eau", min: 36, max: 40, critMin: 43, critMax: 48, parTour: 2, relance: 0, poussee: 1, pa: 4, poMin: 1, poMax: 10, zone: true, sourceId: "12794-sobre", note: "État Sobre : 36 à 40 dommages Eau et repousse les cibles en zone.\nCritique : 43 à 48 dommages Eau.\nLa poussée est appliquée uniquement si le lanceur est Sobre." },
+  { classe: "Pandawa", nom: "Vague à Lame (Saoul)", element: "Eau", min: 44, max: 48, critMin: 51, critMax: 56, parTour: 2, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 10, zone: true, sourceId: "12794-saoul", note: "État Saoul : 44 à 48 dommages Eau.\nCritique : 51 à 56 dommages Eau.\nLa portée du sort est réduite de moitié et la poussée ne s'applique pas." },
   { classe: "Pandawa", nom: "Lien Spiritueux", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 5, poussee: 0, pa: 3, poMin: 1, poMax: 5, zone: true, sourceId: 12799, note: "Invoque un Pandawasta maîtrisable qui retire de la Fuite, de la Puissance et tacle les adversaires.\nIl peut également augmenter ses caractéristiques pendant le combat ou porter le lanceur Sobre si ce dernier l\u0027attaque en mêlée.\n\nLe Pandawasta réduit de 50% les dommages immédiats alliés." },
   { classe: "Pandawa", nom: "Pandanlku", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 4, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 12798, note: "Augmente les PM de la cible." },
   { classe: "Pandawa", nom: "Souffle Enflammé", element: "Feu", min: 38, max: 42, critMin: 46, critMax: 50, parTour: 1, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 3, zone: true, sourceId: 12805, note: "Occasionne des dommages Feu et réduit les chances de Critique en zone." },
@@ -520,13 +523,16 @@
   { classe: "Pandawa", nom: "Bistouille", element: "Terre", min: 34, max: 38, critMin: 41, critMax: 46, parTour: 2, relance: 0, poussee: 0, pa: 4, poMin: 0, poMax: 0, zone: true, sourceId: 12821, note: "Rend le lanceur Saoul et vole de la vie dans l\u0027élément Terre en zone." },
   { classe: "Pandawa", nom: "Brassage", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 12816, note: "Applique des effets sur la cible selon l\u0027état du lanceur :\n• Sobre : augmente les dommages subis par la cible.\n• Saoul : applique l\u0027état Pesanteur sur la cible et l\u0027état Brassage sur le lanceur.\n\nL\u0027état Brassage empêche l\u0027utilisation du sort dans l\u0027état Saoul.\nLa portée du sort est modifiable dans l\u0027état Sobre, mais elle est réduite de moitié si le lanceur est Saoul." },
   { classe: "Pandawa", nom: "Bambouseraie", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 2, poussee: 0, pa: 2, poMin: 0, poMax: 3, zone: true, sourceId: 12785, note: "Invoque plusieurs Petits \u003ccolor=#ebc304\u003e{{spell,12824,1::Bambous}}\u003c/color\u003e en zone.\n\nLes Bambous meurent au début du prochain tour du lanceur." },
-  { classe: "Pandawa", nom: "Souffle Alcoolisé", element: "Air", min: 28, max: 38, critMin: 34, critMax: 44, parTour: 2, relance: 0, poussee: 2, pa: 3, poMin: 1, poMax: 10, zone: true, sourceId: 12784, note: "Occasionne des dommages Air aux ennemis et repousse les cibles en zone.\n\nLa portée du sort est réduite de moitié mais les dommages sont plus importants si le lanceur est Saoul." },
-  { classe: "Pandawa", nom: "Pandatak", element: "Terre", min: 38, max: 50, critMin: 46, critMax: 58, parTour: 2, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 6, zone: true, sourceId: 12797, note: "Occasionne des dommages Terre en zone.\n\nLa portée du sort est réduite de moitié mais les dommages sont plus importants si le lanceur est Saoul." },
+  { classe: "Pandawa", nom: "Souffle Alcoolisé (Sobre)", element: "Air", min: 28, max: 32, critMin: 34, critMax: 38, parTour: 2, relance: 0, poussee: 2, pa: 3, poMin: 1, poMax: 10, zone: true, sourceId: "12784-sobre", note: "État Sobre : 28 à 32 dommages Air, repousse de 2 cases.\nCritique : 34 à 38 dommages Air, repousse de 2 cases." },
+  { classe: "Pandawa", nom: "Souffle Alcoolisé (Saoul)", element: "Air", min: 34, max: 38, critMin: 40, critMax: 44, parTour: 2, relance: 0, poussee: 2, pa: 3, poMin: 1, poMax: 10, zone: true, sourceId: "12784-saoul", note: "État Saoul : 34 à 38 dommages Air, repousse de 2 cases.\nCritique : 40 à 44 dommages Air, repousse de 2 cases." },
+  { classe: "Pandawa", nom: "Pandatak (Sobre)", element: "Terre", min: 38, max: 42, critMin: 46, critMax: 50, parTour: 2, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 6, zone: true, sourceId: "12797-sobre", note: "État Sobre : 38 à 42 dommages Terre en zone.\nCritique : 46 à 50 dommages Terre." },
+  { classe: "Pandawa", nom: "Pandatak (Saoul)", element: "Terre", min: 46, max: 50, critMin: 54, critMax: 58, parTour: 2, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 6, zone: true, sourceId: "12797-saoul", note: "État Saoul : 46 à 50 dommages Terre en zone.\nCritique : 54 à 58 dommages Terre.\nLa portée du sort est réduite de moitié." },
   { classe: "Pandawa", nom: "Prohibition", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 2, poMin: 0, poMax: 5, zone: true, sourceId: 12817, note: "Rend la cible Insoignable et Invulnérable en mêlée.\n\nSur le lanceur :\n• Rend Invulnérable en mêlée et Sobre.\n• Applique l\u0027état Prohibition, qui empêche l\u0027entrée dans l\u0027état Saoul et l\u0027application des effets des Tonneaux sur lui.\n• Rend Insoignable au début du prochain tour." },
   { classe: "Pandawa", nom: "Cascade", element: "Eau", min: 24, max: 28, critMin: 29, critMax: 34, parTour: 1, relance: 0, poussee: 4, pa: 2, poMin: 1, poMax: 5, zone: true, sourceId: 12823, note: "Jette la cible, soigne les alliés, occasionne des dommages Eau aux ennemis et repousse les entités en zone." },
   { classe: "Pandawa", nom: "Pandjiu", element: "Feu", min: 28, max: 32, critMin: 34, critMax: 38, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 5, zone: true, sourceId: 14309, note: "Occasionne des dommages Feu aux ennemis et attire la cible." },
   { classe: "Pandawa", nom: "Bambou", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 1, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 4, zone: true, sourceId: 12824, note: "Invoque un Bambou qui sert d\u0027obstacle.\nIl peut porter le lanceur Sobre si ce dernier l\u0027attaque en mêlée.\n\nLe Bambou réduit de 80% les dommages immédiats alliés.\n\nRend 1 PA au lanceur s\u0027il porte un Bambou." },
-  { classe: "Pandawa", nom: "Main de Pandawa", element: "Meilleur element", min: 70, max: 70, critMin: 100, critMax: 100, parTour: null, relance: 5, poussee: 0, pa: 5, poMin: 1, poMax: 5, zone: true, sourceId: 24039, note: "70 dommages du meilleur élément.\nCritique : 100 dommages du meilleur élément.\n\nRetire de la Puissance et occasionne des dommages selon l\u0027état du lanceur et lui applique l\u0027état Main de Pandawa :\n• Sobre : occasionne des dommages dans son meilleur élément.\n• Saoul : occasionne des dommages Neutre, Terre, Feu, Eau et Air." },
+  { classe: "Pandawa", nom: "Main de Pandawa (Sobre)", element: "Meilleur element", min: 70, max: 70, critMin: 100, critMax: 100, parTour: null, relance: 5, poussee: 0, pa: 5, poMin: 1, poMax: 5, zone: true, sourceId: "24039-sobre", note: "70 dommages du meilleur élément.\nCritique : 100 dommages du meilleur élément.\n\nRetire de la Puissance et occasionne des dommages selon l\u0027état du lanceur et lui applique l\u0027état Main de Pandawa :\n• Sobre : occasionne des dommages dans son meilleur élément.\n• Saoul : occasionne des dommages Terre, Feu, Eau et Air." },
+  { classe: "Pandawa", nom: "Main de Pandawa (Saoul)", element: "Neutre / Terre / Feu / Eau / Air", min: 35, max: 35, critMin: 50, critMax: 50, hits: [{ element: "neutre", min: 7, max: 7, critMin: 10, critMax: 10 }, { element: "terre", min: 7, max: 7, critMin: 10, critMax: 10 }, { element: "feu", min: 7, max: 7, critMin: 10, critMax: 10 }, { element: "eau", min: 7, max: 7, critMin: 10, critMax: 10 }, { element: "air", min: 7, max: 7, critMin: 10, critMax: 10 }], parTour: null, relance: 5, poussee: 0, pa: 5, poMin: 1, poMax: 5, zone: true, sourceId: "24039-saoul", note: "Additionne 5 lignes de dégâts : Neutre, Terre, Feu, Eau et Air.\nNormal : 7 dommages par élément, 35 de base au total.\nCritique : 10 dommages par élément, 50 de base au total." },
   { classe: "Roublard", nom: "Explobombe", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 6, zone: true, sourceId: 13444, note: "Pose une Bombe qui peut occasionner des dommages Feu en zone à son explosion.\n\nSur une cible : applique les effets de la Bombe en zone.\nN\u0027affecte pas le lanceur.\nAjoute également 1 Combo et déclenche l\u0027explosion d\u0027une Bombe si la cible est une de ses Bombes.\n\nLe coût en PA du sort augmente de 1 pour chaque Explobombe du lanceur présente sur le terrain." },
   { classe: "Roublard", nom: "Tornabombe", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 6, zone: true, sourceId: 13435, note: "Pose une Bombe qui peut occasionner des dommages Air et retirer des PM selon son Combo en zone à son explosion.\n• Combo I à IV : -1 PM\n• Combo V à IX : -2 PM\n• Combo X à XV : -3 PM\n• Mur d\u0027Air : -2 PM\n\nSur une cible : applique les effets de la Bombe en zone.\nN\u0027affecte pas le lanceur.\nAjoute également 1 Combo et déclenche l\u0027explosion d\u0027une Bombe si la cible est une de ses Bombes.\n\nLe coût en PA du sort augmente de 1 pour chaque Tornabombe du lanceur présente sur le terrain." },
   { classe: "Roublard", nom: "Bombe à Eau", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 6, zone: true, sourceId: 13436, note: "Pose une Bombe qui peut occasionner des dommages Eau et retirer des PA selon son Combo en zone à son explosion.\n• Combo I à IV : -0 PA\n• Combo V à IX : -1 PA\n• Combo X à XV : -2 PA\n\nSur une cible : applique les effets de la Bombe en zone.\nN\u0027affecte pas le lanceur.\nAjoute également 1 Combo et déclenche l\u0027explosion d\u0027une Bombe si la cible est une de ses Bombes.\n\nLe mur de Bombes à Eau retire des PA uniquement aux entités qui commencent leur tour à l\u0027intérieur.\n• Mur d\u0027Eau : -2 PA\n\nLe coût en PA du sort augmente de 1 pour chaque Bombe à Eau du lanceur présente sur le terrain." },
@@ -874,6 +880,8 @@ const elements = {
   agilityInput: document.querySelector("#agilityInput"),
   powerInput: document.querySelector("#powerInput"),
   pushDamageInput: document.querySelector("#pushDamageInput"),
+  pushRecoilInput: document.querySelector("#pushRecoilInput"),
+  pushChainInput: document.querySelector("#pushChainInput"),
   flatDamageInput: document.querySelector("#flatDamageInput"),
   neutralDamageInput: document.querySelector("#neutralDamageInput"),
   earthDamageInput: document.querySelector("#earthDamageInput"),
@@ -929,6 +937,7 @@ function spellKey(spell) {
 }
 
 function asNumber(input) {
+  if (!input) return 0;
   return Number.parseFloat(input.value) || 0;
 }
 
@@ -941,6 +950,29 @@ function damageRange(spell) {
   return state.crit
     ? { min: spell.critMin ?? spell.min, max: spell.critMax ?? spell.max }
     : { min: spell.min, max: spell.max };
+}
+
+function damageHits(spell) {
+  if (Array.isArray(spell.hits) && spell.hits.length > 0) {
+    return spell.hits.map((hit) => ({
+      element: hit.element,
+      min: state.crit ? hit.critMin ?? hit.min : hit.min,
+      max: state.crit ? hit.critMax ?? hit.max : hit.max,
+    }));
+  }
+
+  const range = damageRange(spell);
+  if (!range) return [];
+  const element = bestElementForRange(spell, range);
+  return [{ element, min: range.min, max: range.max }];
+}
+
+function damageLabel(spell) {
+  if (Array.isArray(spell.hits) && spell.hits.length > 0) {
+    return `${spell.min}-${spell.max} total`;
+  }
+
+  return spell.min === null ? "Utilitaire" : `${spell.min}-${spell.max}`;
 }
 
 function selectedDamageElement(spell) {
@@ -1039,15 +1071,20 @@ function calculateDamage(base, forcedElement = selectedDamageElement(state.selec
 }
 
 function calculatePushDamage(spell) {
-  const pushedCells = Number(spell.poussee) || 0;
-  if (!pushedCells) return 0;
+  const maxPush = Number(spell.poussee) || 0;
+  if (!maxPush) return 0;
 
   const level = Math.min(200, Math.max(1, asNumber(elements.levelInput) || 200));
+  const recoil = Math.min(maxPush, Math.max(0, asNumber(elements.pushRecoilInput)));
+  if (!recoil) return 0;
+
   const pushDamage = asNumber(elements.pushDamageInput);
   const pushRes = asNumber(elements.pushResInput);
-  const damagePerCell = Math.max(0, 8 + level / 2 + pushDamage - pushRes);
+  const intermediaries = Math.max(0, asNumber(elements.pushChainInput));
+  const baseDamage = Math.max(0, 32 + level / 2 + pushDamage - pushRes);
+  const chainMultiplier = 1 / 2 ** intermediaries;
 
-  return Math.floor(damagePerCell * pushedCells);
+  return Math.floor(baseDamage * (recoil / 4) * chainMultiplier);
 }
 
 function bestElementForRange(spell, range) {
@@ -1065,6 +1102,11 @@ function bestElementForRange(spell, range) {
 
 function resultElementClass(element) {
   return `result-${element}`;
+}
+
+function resultClassForHits(hits) {
+  const uniqueElements = [...new Set(hits.map((hit) => hit.element))];
+  return uniqueElements.length === 1 ? resultElementClass(uniqueElements[0]) : "result-multi";
 }
 
 function cooldownRemaining(spell) {
@@ -1138,7 +1180,7 @@ function renderSpellList() {
       <strong>${spell.nom}</strong>
       <span class="spell-meta">
         <span class="pill ${elementClass(spell.element)}">${spell.element || "-"}</span>
-        <span>${spell.min === null ? "Utilitaire" : `${spell.min}-${spell.max}`}</span>
+        <span>${damageLabel(spell)}</span>
         <span>Relance ${spell.relance || "-"}</span>
       </span>
     `;
@@ -1183,31 +1225,34 @@ function renderSelectedSpell() {
 
   const pushDamage = calculatePushDamage(spell);
   const pushText = spell.poussee
-    ? `Poussee: ${pushDamage} (${spell.poussee} case${spell.poussee > 1 ? "s" : ""})`
+    ? `Poussee: ${pushDamage} (recul ${asNumber(elements.pushRecoilInput)} / ${spell.poussee})`
     : "";
   elements.pushDamageResult.textContent = pushText;
 
   if (!range) {
     elements.damageResult.textContent = pushDamage ? `${pushDamage}` : "Pas de degats";
     elements.damageResult.className = pushDamage ? "result-neutre" : "";
-    elements.damageFormula.textContent = pushDamage
-      ? `Dommages de poussee: floor((8 + niveau / 2 + dommages poussee - resistances poussee) x ${spell.poussee}).`
+  elements.damageFormula.textContent = pushDamage
+      ? `Dommages de poussee: floor((32 + niveau / 2 + dommages poussee - resistances poussee) x recul / 4 x 1/2^intermediaires).`
       : "Ce sort est marque comme utilitaire dans le tableau.";
     return;
   }
 
-  const element = bestElementForRange(spell, range);
-  const minDamage = calculateDamage(range.min, element);
-  const maxDamage = calculateDamage(range.max, element);
+  const hits = damageHits(spell);
+  const minDamage = hits.reduce((total, hit) => total + calculateDamage(hit.min, hit.element), 0);
+  const maxDamage = hits.reduce((total, hit) => total + calculateDamage(hit.max, hit.element), 0);
   const minTotal = minDamage + pushDamage;
   const maxTotal = maxDamage + pushDamage;
   elements.damageResult.textContent = pushDamage
     ? `${minTotal} - ${maxTotal}`
     : `${minDamage} - ${maxDamage}`;
-  elements.damageResult.className = resultElementClass(element);
+  elements.damageResult.className = resultClassForHits(hits);
+  const hitSummary = hits.length > 1
+    ? hits.map((hit) => `${hit.min}-${hit.max} ${hit.element}`).join(" + ")
+    : `${range.min}-${range.max} en ${hits[0].element}`;
   elements.damageFormula.textContent = pushDamage
-    ? `Base ${range.min}-${range.max} en ${element}, plus ${pushDamage} dommages de poussee. Total = degats du sort + floor((8 + niveau / 2 + dommages poussee - resistances poussee) x ${spell.poussee}).`
-    : `Base ${range.min}-${range.max} en ${element}. Brut: floor(base x (puissance + stat + 100) / 100 + fixes). Puis resistances, dommages subis et reduction de zone si active.`;
+    ? `Base ${hitSummary}, plus ${pushDamage} dommages de poussee. Do pou = floor((32 + niveau / 2 + dommages poussee - resistances poussee) x recul / 4 x 1/2^intermediaires).`
+    : `Base ${hitSummary}. Chaque ligne utilise ses stats, dommages et resistances elementaires, puis le total est additionne.`;
 }
 
 function renderTimeline() {
