@@ -526,7 +526,8 @@
   { classe: "Pandawa", nom: "Cascade", element: "Eau", min: 24, max: 28, critMin: 29, critMax: 34, parTour: 1, relance: 0, poussee: 4, pa: 2, poMin: 1, poMax: 5, zone: true, sourceId: 12823, note: "Jette la cible, soigne les alliés, occasionne des dommages Eau aux ennemis et repousse les entités en zone." },
   { classe: "Pandawa", nom: "Pandjiu", element: "Feu", min: 28, max: 32, critMin: 34, critMax: 38, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 5, zone: true, sourceId: 14309, note: "Occasionne des dommages Feu aux ennemis et attire la cible." },
   { classe: "Pandawa", nom: "Bambou", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 1, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 4, zone: true, sourceId: 12824, note: "Invoque un Bambou qui sert d\u0027obstacle.\nIl peut porter le lanceur Sobre si ce dernier l\u0027attaque en mêlée.\n\nLe Bambou réduit de 80% les dommages immédiats alliés.\n\nRend 1 PA au lanceur s\u0027il porte un Bambou." },
-  { classe: "Pandawa", nom: "Main de Pandawa", element: "Meilleur element", min: 70, max: 70, critMin: 100, critMax: 100, parTour: null, relance: 5, poussee: 0, pa: 5, poMin: 1, poMax: 5, zone: true, sourceId: 24039, note: "70 dommages du meilleur élément.\nCritique : 100 dommages du meilleur élément.\n\nRetire de la Puissance et occasionne des dommages selon l\u0027état du lanceur et lui applique l\u0027état Main de Pandawa :\n• Sobre : occasionne des dommages dans son meilleur élément.\n• Saoul : occasionne des dommages Neutre, Terre, Feu, Eau et Air." },
+  { classe: "Pandawa", nom: "Main de Pandawa (Sobre)", element: "Meilleur element", min: 70, max: 70, critMin: 100, critMax: 100, parTour: null, relance: 5, poussee: 0, pa: 5, poMin: 1, poMax: 5, zone: true, sourceId: "24039-sobre", note: "70 dommages du meilleur élément.\nCritique : 100 dommages du meilleur élément.\n\nRetire de la Puissance et occasionne des dommages selon l\u0027état du lanceur et lui applique l\u0027état Main de Pandawa :\n• Sobre : occasionne des dommages dans son meilleur élément.\n• Saoul : occasionne des dommages Terre, Feu, Eau et Air." },
+  { classe: "Pandawa", nom: "Main de Pandawa (Saoul)", element: "Terre / Feu / Eau / Air", min: 28, max: 28, critMin: 40, critMax: 40, hits: [{ element: "terre", min: 7, max: 7, critMin: 10, critMax: 10 }, { element: "feu", min: 7, max: 7, critMin: 10, critMax: 10 }, { element: "eau", min: 7, max: 7, critMin: 10, critMax: 10 }, { element: "air", min: 7, max: 7, critMin: 10, critMax: 10 }], parTour: null, relance: 5, poussee: 0, pa: 5, poMin: 1, poMax: 5, zone: true, sourceId: "24039-saoul", note: "Additionne 4 lignes de dégâts : Terre, Feu, Eau et Air.\nNormal : 7 dommages par élément, 28 de base au total.\nCritique : 10 dommages par élément, 40 de base au total." },
   { classe: "Roublard", nom: "Explobombe", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 6, zone: true, sourceId: 13444, note: "Pose une Bombe qui peut occasionner des dommages Feu en zone à son explosion.\n\nSur une cible : applique les effets de la Bombe en zone.\nN\u0027affecte pas le lanceur.\nAjoute également 1 Combo et déclenche l\u0027explosion d\u0027une Bombe si la cible est une de ses Bombes.\n\nLe coût en PA du sort augmente de 1 pour chaque Explobombe du lanceur présente sur le terrain." },
   { classe: "Roublard", nom: "Tornabombe", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 6, zone: true, sourceId: 13435, note: "Pose une Bombe qui peut occasionner des dommages Air et retirer des PM selon son Combo en zone à son explosion.\n• Combo I à IV : -1 PM\n• Combo V à IX : -2 PM\n• Combo X à XV : -3 PM\n• Mur d\u0027Air : -2 PM\n\nSur une cible : applique les effets de la Bombe en zone.\nN\u0027affecte pas le lanceur.\nAjoute également 1 Combo et déclenche l\u0027explosion d\u0027une Bombe si la cible est une de ses Bombes.\n\nLe coût en PA du sort augmente de 1 pour chaque Tornabombe du lanceur présente sur le terrain." },
   { classe: "Roublard", nom: "Bombe à Eau", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 6, zone: true, sourceId: 13436, note: "Pose une Bombe qui peut occasionner des dommages Eau et retirer des PA selon son Combo en zone à son explosion.\n• Combo I à IV : -0 PA\n• Combo V à IX : -1 PA\n• Combo X à XV : -2 PA\n\nSur une cible : applique les effets de la Bombe en zone.\nN\u0027affecte pas le lanceur.\nAjoute également 1 Combo et déclenche l\u0027explosion d\u0027une Bombe si la cible est une de ses Bombes.\n\nLe mur de Bombes à Eau retire des PA uniquement aux entités qui commencent leur tour à l\u0027intérieur.\n• Mur d\u0027Eau : -2 PA\n\nLe coût en PA du sort augmente de 1 pour chaque Bombe à Eau du lanceur présente sur le terrain." },
@@ -943,6 +944,29 @@ function damageRange(spell) {
     : { min: spell.min, max: spell.max };
 }
 
+function damageHits(spell) {
+  if (Array.isArray(spell.hits) && spell.hits.length > 0) {
+    return spell.hits.map((hit) => ({
+      element: hit.element,
+      min: state.crit ? hit.critMin ?? hit.min : hit.min,
+      max: state.crit ? hit.critMax ?? hit.max : hit.max,
+    }));
+  }
+
+  const range = damageRange(spell);
+  if (!range) return [];
+  const element = bestElementForRange(spell, range);
+  return [{ element, min: range.min, max: range.max }];
+}
+
+function damageLabel(spell) {
+  if (Array.isArray(spell.hits) && spell.hits.length > 0) {
+    return `${spell.min}-${spell.max} total`;
+  }
+
+  return spell.min === null ? "Utilitaire" : `${spell.min}-${spell.max}`;
+}
+
 function selectedDamageElement(spell) {
   const manual = elements.damageElementInput.value;
   if (manual !== "auto") return manual;
@@ -1067,6 +1091,11 @@ function resultElementClass(element) {
   return `result-${element}`;
 }
 
+function resultClassForHits(hits) {
+  const uniqueElements = [...new Set(hits.map((hit) => hit.element))];
+  return uniqueElements.length === 1 ? resultElementClass(uniqueElements[0]) : "result-multi";
+}
+
 function cooldownRemaining(spell) {
   const readyTurn = state.cooldowns.get(spellKey(spell));
   if (!readyTurn || readyTurn <= state.turn) return 0;
@@ -1138,7 +1167,7 @@ function renderSpellList() {
       <strong>${spell.nom}</strong>
       <span class="spell-meta">
         <span class="pill ${elementClass(spell.element)}">${spell.element || "-"}</span>
-        <span>${spell.min === null ? "Utilitaire" : `${spell.min}-${spell.max}`}</span>
+        <span>${damageLabel(spell)}</span>
         <span>Relance ${spell.relance || "-"}</span>
       </span>
     `;
@@ -1196,18 +1225,21 @@ function renderSelectedSpell() {
     return;
   }
 
-  const element = bestElementForRange(spell, range);
-  const minDamage = calculateDamage(range.min, element);
-  const maxDamage = calculateDamage(range.max, element);
+  const hits = damageHits(spell);
+  const minDamage = hits.reduce((total, hit) => total + calculateDamage(hit.min, hit.element), 0);
+  const maxDamage = hits.reduce((total, hit) => total + calculateDamage(hit.max, hit.element), 0);
   const minTotal = minDamage + pushDamage;
   const maxTotal = maxDamage + pushDamage;
   elements.damageResult.textContent = pushDamage
     ? `${minTotal} - ${maxTotal}`
     : `${minDamage} - ${maxDamage}`;
-  elements.damageResult.className = resultElementClass(element);
+  elements.damageResult.className = resultClassForHits(hits);
+  const hitSummary = hits.length > 1
+    ? hits.map((hit) => `${hit.min}-${hit.max} ${hit.element}`).join(" + ")
+    : `${range.min}-${range.max} en ${hits[0].element}`;
   elements.damageFormula.textContent = pushDamage
-    ? `Base ${range.min}-${range.max} en ${element}, plus ${pushDamage} dommages de poussee. Total = degats du sort + floor((8 + niveau / 2 + dommages poussee - resistances poussee) x ${spell.poussee}).`
-    : `Base ${range.min}-${range.max} en ${element}. Brut: floor(base x (puissance + stat + 100) / 100 + fixes). Puis resistances, dommages subis et reduction de zone si active.`;
+    ? `Base ${hitSummary}, plus ${pushDamage} dommages de poussee. Total = degats du sort + floor((8 + niveau / 2 + dommages poussee - resistances poussee) x ${spell.poussee}).`
+    : `Base ${hitSummary}. Chaque ligne utilise ses stats, dommages et resistances elementaires, puis le total est additionne.`;
 }
 
 function renderTimeline() {

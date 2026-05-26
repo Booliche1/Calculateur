@@ -524,6 +524,11 @@ select {
   border-color: #aeb8c0;
 }
 
+.result-strip:has(.result-multi) {
+  background: linear-gradient(135deg, #26313a, #49705d);
+  border-color: #8fd1ad;
+}
+
 .result-strip span,
 .result-strip p {
   color: #c8d2cc;
@@ -547,7 +552,8 @@ select {
 .result-strip strong.result-feu,
 .result-strip strong.result-air,
 .result-strip strong.result-eau,
-.result-strip strong.result-neutre {
+.result-strip strong.result-neutre,
+.result-strip strong.result-multi {
   color: #ffffff;
 }
 

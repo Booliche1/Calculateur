@@ -22,6 +22,8 @@ const spellOverrides = {
     max: 70,
     critMin: 100,
     critMax: 100,
+    nameSuffix: " (Sobre)",
+    sourceId: "24039-sobre",
     note: "70 dommages du meilleur élément.\nCritique : 100 dommages du meilleur élément.",
   },
 };
@@ -76,7 +78,7 @@ function toSpellRecord(className, spell, level) {
 
   return {
     classe: className,
-    nom: spell.name.fr,
+    nom: `${spell.name.fr}${override.nameSuffix || ""}`,
     element: override.element || normal?.element || "-",
     min: override.min ?? normal?.min ?? null,
     max: override.max ?? normal?.max ?? null,
@@ -89,9 +91,31 @@ function toSpellRecord(className, spell, level) {
     poMin: level.minRange,
     poMax: level.range,
     zone: zoneEffects.length > 0,
-    sourceId: spell.id,
+    sourceId: override.sourceId || spell.id,
     note: override.note ? `${override.note}\n\n${spell.description?.fr || ""}` : spell.description?.fr || "",
   };
+}
+
+function extraSpellRecords(className, spell, baseRecord) {
+  if (spell.id !== 24039) return [];
+
+  return [{
+    ...baseRecord,
+    nom: "Main de Pandawa (Saoul)",
+    element: "Terre / Feu / Eau / Air",
+    min: 28,
+    max: 28,
+    critMin: 40,
+    critMax: 40,
+    hits: [
+      { element: "terre", min: 7, max: 7, critMin: 10, critMax: 10 },
+      { element: "feu", min: 7, max: 7, critMin: 10, critMax: 10 },
+      { element: "eau", min: 7, max: 7, critMin: 10, critMax: 10 },
+      { element: "air", min: 7, max: 7, critMin: 10, critMax: 10 },
+    ],
+    sourceId: "24039-saoul",
+    note: "Additionne 4 lignes de dégâts : Terre, Feu, Eau et Air.\nNormal : 7 dommages par élément, 28 de base au total.\nCritique : 10 dommages par élément, 40 de base au total.",
+  }];
 }
 
 async function importBreed(breedId) {
@@ -105,7 +129,8 @@ async function importBreed(breedId) {
 
   for (const spell of spells) {
     const level = await get(`/spell-levels/${bestLevel(spell)}`);
-    records.push(toSpellRecord(breed.shortName.fr, spell, level));
+    const record = toSpellRecord(breed.shortName.fr, spell, level);
+    records.push(record, ...extraSpellRecords(breed.shortName.fr, spell, record));
   }
 
   return records;
