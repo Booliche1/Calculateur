@@ -862,6 +862,8 @@ const state = {
   crit: false,
   cooldowns: new Map(),
   castsThisTurn: new Map(),
+  parchmentApplied: false,
+  quickFinalBonus: 0,
 };
 
 const elements = {
@@ -963,6 +965,39 @@ function isChecked(input) {
   return Boolean(input?.checked);
 }
 
+function adjustInputValue(input, amount) {
+  input.value = asNumber(input) + amount;
+}
+
+function applyParchmentDisplay() {
+  const shouldApply = isChecked(elements.parchmentInput);
+  if (shouldApply === state.parchmentApplied) return;
+
+  const amount = shouldApply ? 100 : -100;
+  [elements.forceInput, elements.intelligenceInput, elements.chanceInput, elements.agilityInput].forEach((input) => {
+    adjustInputValue(input, amount);
+  });
+  state.parchmentApplied = shouldApply;
+}
+
+function currentQuickFinalBonus() {
+  return (
+    (isChecked(elements.vulbisInput) ? 10 : 0) +
+    (isChecked(elements.nebuleuxInput) ? 20 : 0) +
+    asNumber(elements.pourpreInput) +
+    asNumber(elements.turquoiseInput)
+  );
+}
+
+function applyFinalBonusDisplay() {
+  const nextBonus = currentQuickFinalBonus();
+  const delta = nextBonus - state.quickFinalBonus;
+  if (delta === 0) return;
+
+  adjustInputValue(elements.finalDamageInput, delta);
+  state.quickFinalBonus = nextBonus;
+}
+
 function formatValue(value, empty = "-") {
   return value === null || value === undefined || value === "" ? empty : value;
 }
@@ -1025,7 +1060,6 @@ function isBestElementSpell(spell) {
 const attackElements = ["terre", "feu", "air", "eau"];
 
 function elementStats(element) {
-  const parchmentBonus = isChecked(elements.parchmentInput) ? 100 : 0;
   const statInputs = {
     neutre: elements.forceInput,
     terre: elements.forceInput,
@@ -1056,7 +1090,7 @@ function elementStats(element) {
   };
 
   return {
-    stat: asNumber(statInputs[element]) + parchmentBonus,
+    stat: asNumber(statInputs[element]),
     elementalDamage: asNumber(damageInputs[element]),
     flatRes: asNumber(flatResInputs[element]),
     percentRes: asNumber(percentResInputs[element]),
@@ -1065,16 +1099,6 @@ function elementStats(element) {
 
 function percentMultiplier(value) {
   return 1 + value / 100;
-}
-
-function finalDamageBonus() {
-  return (
-    asNumber(elements.finalDamageInput) +
-    (isChecked(elements.vulbisInput) ? 10 : 0) +
-    (isChecked(elements.nebuleuxInput) ? 20 : 0) +
-    asNumber(elements.pourpreInput) +
-    asNumber(elements.turquoiseInput)
-  );
 }
 
 function calculateDamage(base, forcedElement = selectedDamageElement(state.selected)) {
@@ -1100,7 +1124,7 @@ function calculateDamage(base, forcedElement = selectedDamageElement(state.selec
   const resistedDamage = Math.floor((rawDamage - fixedRes) * ((100 - stats.percentRes) / 100));
   const sufferedMultiplier =
     (asNumber(elements.sufferedDamageInput) / 100) *
-    percentMultiplier(finalDamageBonus()) *
+    percentMultiplier(asNumber(elements.finalDamageInput)) *
     percentMultiplier(asNumber(hitType === "spell" ? elements.spellDamageInput : elements.weaponDamageInput)) *
     percentMultiplier(asNumber(rangeType === "distance" ? elements.distanceDamageInput : elements.meleeDamageInput)) *
     percentMultiplier(asNumber(elements.portalInput)) *
@@ -1406,6 +1430,16 @@ if (elements.spellList && elements.searchInput && elements.damageResult) {
   elements.nextTurn.addEventListener("click", nextTurn);
   elements.prevTurn.addEventListener("click", prevTurn);
   elements.resetFight.addEventListener("click", resetFight);
+  elements.parchmentInput.addEventListener("change", () => {
+    applyParchmentDisplay();
+    renderSelectedSpell();
+  });
+  [elements.vulbisInput, elements.nebuleuxInput, elements.pourpreInput, elements.turquoiseInput].forEach((input) => {
+    input.addEventListener("change", () => {
+      applyFinalBonusDisplay();
+      renderSelectedSpell();
+    });
+  });
   elements.clearCooldowns.addEventListener("click", () => {
     state.cooldowns.clear();
     render();
