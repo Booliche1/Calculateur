@@ -998,6 +998,89 @@ function applyFinalBonusDisplay() {
   state.quickFinalBonus = nextBonus;
 }
 
+const dofusDbEffectIcon = (id) => `https://api.dofusdb.fr/img/effects/${id}.png`;
+const statIconMap = {
+  Niveau: { text: "Nv", tone: "utility" },
+  "Dommages poussee": { text: "Po", tone: "push" },
+  "Recul obstacle": { text: "Rc", tone: "push" },
+  Intermediaires: { text: "In", tone: "utility" },
+  Force: { text: "Fo", tone: "terre", src: dofusDbEffectIcon(118) },
+  Intelligence: { text: "In", tone: "feu", src: dofusDbEffectIcon(126) },
+  Chance: { text: "Ch", tone: "eau", src: dofusDbEffectIcon(123) },
+  Agilite: { text: "Ag", tone: "air", src: dofusDbEffectIcon(119) },
+  Puissance: { text: "Pu", tone: "power", src: dofusDbEffectIcon(138) },
+  Dommages: { text: "Do", tone: "damage", src: dofusDbEffectIcon(112) },
+  "% Critique": { text: "%", tone: "crit", src: dofusDbEffectIcon(115) },
+  "% Dommages finaux": { text: "%", tone: "final" },
+  "% Dommages sorts": { text: "S", tone: "spell" },
+  "% Dommages armes": { text: "A", tone: "weapon" },
+  "% Dommages distance": { text: "D", tone: "distance" },
+  "% Dommages melee": { text: "M", tone: "melee" },
+  "Dommages neutre": { text: "N", tone: "neutre" },
+  "Dommages terre": { text: "T", tone: "terre" },
+  "Dommages feu": { text: "F", tone: "feu" },
+  "Dommages eau": { text: "E", tone: "eau" },
+  "Dommages air": { text: "A", tone: "air" },
+  "Dommages critiques": { text: "Cr", tone: "crit" },
+  "Type de coup": { text: "Ty", tone: "utility" },
+  "Distance du coup": { text: "Di", tone: "distance" },
+  "Eloignement zone": { text: "Zo", tone: "distance" },
+  Portail: { text: "Po", tone: "portal" },
+  Redirection: { text: "Re", tone: "portal" },
+  "Sort de zone": { text: "Zo", tone: "spell" },
+  "Element calcule": { text: "El", tone: "multi" },
+  "Resistances fixes neutre": { text: "N", tone: "neutre" },
+  "% Resistances neutre": { text: "%", tone: "neutre" },
+  "Resistances fixes terre": { text: "T", tone: "terre" },
+  "% Resistances terre": { text: "%", tone: "terre" },
+  "Resistances fixes feu": { text: "F", tone: "feu" },
+  "% Resistances feu": { text: "%", tone: "feu" },
+  "Resistances fixes eau": { text: "E", tone: "eau" },
+  "% Resistances eau": { text: "%", tone: "eau" },
+  "Resistances fixes air": { text: "A", tone: "air" },
+  "% Resistances air": { text: "%", tone: "air" },
+  "Resistances critiques": { text: "Cr", tone: "crit" },
+  "% Dommages subis": { text: "%", tone: "final" },
+  "Resistances poussee": { text: "Po", tone: "push" },
+  "Res fixes sorts": { text: "S", tone: "spell" },
+  "% Resistances distance": { text: "D", tone: "distance" },
+  "Res fixes armes": { text: "A", tone: "weapon" },
+  "% Resistances melee": { text: "M", tone: "melee" },
+  "Parchotage 100": { text: "Pa", tone: "power" },
+  "Vulbis +10% finaux": { text: "Vu", tone: "final" },
+  "Nebuleux +20% finaux": { text: "Ne", tone: "final" },
+  Pourpre: { text: "Po", tone: "final" },
+  Turquoise: { text: "Tu", tone: "final" },
+};
+
+function enhanceStatIcons() {
+  document.querySelectorAll(".calc-table label > span, .bonus-panel label > span").forEach((label) => {
+    const text = label.textContent.trim();
+    const icon = statIconMap[text];
+    if (!icon || label.querySelector(".stat-icon")) return;
+
+    const iconNode = document.createElement("span");
+    iconNode.className = `stat-icon stat-icon-${icon.tone}`;
+    iconNode.textContent = icon.text;
+
+    if (icon.src) {
+      const image = document.createElement("img");
+      image.src = icon.src;
+      image.alt = "";
+      image.loading = "lazy";
+      image.addEventListener("load", () => {
+        iconNode.classList.add("has-image");
+      });
+      image.addEventListener("error", () => {
+        image.remove();
+      });
+      iconNode.append(image);
+    }
+
+    label.prepend(iconNode);
+  });
+}
+
 function formatValue(value, empty = "-") {
   return value === null || value === undefined || value === "" ? empty : value;
 }
@@ -1414,6 +1497,7 @@ function render() {
 if (elements.spellList && elements.searchInput && elements.damageResult) {
   renderClassOptions();
   renderElementOptions();
+  enhanceStatIcons();
   render();
 
   elements.searchInput.addEventListener("input", renderSpellList);

@@ -583,6 +583,94 @@ select:focus {
   border-radius: 6px;
 }
 
+.stat-icon {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  overflow: hidden;
+  color: #07111c;
+  background: #c8d2df;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 6px;
+  font-size: 0.62rem;
+  font-weight: 950;
+  line-height: 1;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%);
+}
+
+.stat-icon img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stat-icon.has-image {
+  color: transparent;
+}
+
+.stat-icon-neutre {
+  background: linear-gradient(135deg, #f0f2f5, #7e8792);
+}
+
+.stat-icon-terre {
+  background: linear-gradient(135deg, #ffe07a, #b87925);
+}
+
+.stat-icon-feu {
+  background: linear-gradient(135deg, #ff9a6e, #db3b2f);
+}
+
+.stat-icon-eau {
+  background: linear-gradient(135deg, #9de7ff, #3281d6);
+}
+
+.stat-icon-air {
+  background: linear-gradient(135deg, #b7f58a, #45a55a);
+}
+
+.stat-icon-crit {
+  background: linear-gradient(135deg, #ffef7a, #f25757);
+}
+
+.stat-icon-damage {
+  background: linear-gradient(135deg, #fff06f, #e2a30e);
+}
+
+.stat-icon-power,
+.stat-icon-final {
+  background: linear-gradient(135deg, #d8b7ff, #7c5cff);
+}
+
+.stat-icon-spell {
+  background: linear-gradient(135deg, #9be8ff, #6486ff);
+}
+
+.stat-icon-weapon {
+  background: linear-gradient(135deg, #f7f0d2, #a58755);
+}
+
+.stat-icon-distance,
+.stat-icon-portal {
+  background: linear-gradient(135deg, #a3fff5, #2ca5b8);
+}
+
+.stat-icon-melee,
+.stat-icon-push {
+  background: linear-gradient(135deg, #ffb572, #e45c2f);
+}
+
+.stat-icon-utility,
+.stat-icon-multi {
+  background: linear-gradient(135deg, #dce6f2, #8798ad);
+}
+
 .calc-table {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
