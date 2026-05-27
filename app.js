@@ -19,7 +19,7 @@
   { classe: "Féca", nom: "Silbo", element: "Air", min: 17, max: 19, critMin: 20, critMax: 23, parTour: 2, relance: 0, poussee: 1, pa: 2, poMin: 1, poMax: 6, zone: true, sourceId: 13011, note: "Occasionne des dommages Air aux ennemis et repousse les cibles depuis le centre en zone.\nN\u0027affecte pas le lanceur." },
   { classe: "Féca", nom: "Torpeur", element: "Terre", min: 27, max: 30, critMin: 32, critMax: 36, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 6, zone: true, sourceId: 14434, note: "Attire la cible et occasionne des dommages Terre aux ennemis." },
   { classe: "Féca", nom: "Bergerie", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 3, zone: true, sourceId: 12991, note: "Pose un glyphe-aura qui applique les états Inébranlable et Pesanteur sur les entités.\nApplique également l\u0027Étoile du Berger sur les alliés présents ou entrant dans le glyphe." },
-  { classe: "Féca", nom: "Défiance", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 2, poussee: 0, pa: 2, poMin: 0, poMax: 7, zone: true, sourceId: 12988, note: "Augmente le Tacle de l\u0027allié ciblé pour chaque ennemi à son contact et pose un glyphe de fin de tour qui occasionne des dommages Terre, Feu, Eau et Air aux ennemis.\nAugmente les résistances en mêlée des alliés présents ou entrant dans le glyphe.\n\nInvoque également la Lanterne du Berger, lui applique les effets du sort et lui permet de tacler si la case est libre." },
+  { classe: "Féca", nom: "Défiance", element: "Terre / Feu / Eau / Air", min: 84, max: 88, critMin: 84, critMax: 88, hits: [{ element: "terre", min: 21, max: 22 }, { element: "feu", min: 21, max: 22 }, { element: "eau", min: 21, max: 22 }, { element: "air", min: 21, max: 22 }], parTour: null, relance: 2, poussee: 0, pa: 2, poMin: 0, poMax: 7, zone: true, sourceId: 12988, note: "Additionne 4 lignes de dégâts : Terre, Feu, Eau et Air.\nNormal : 21 à 22 par élément, 84 à 88 de base au total." },
   { classe: "Féca", nom: "Bouclier Féca", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 2, poMin: 0, poMax: 5, zone: true, sourceId: 12982, note: "Réduit les dommages subis par l\u0027allié ciblé.\nApplique également l\u0027Étoile du Berger sur l\u0027allié ciblé et tous les alliés dans un glyphe élémentaire allié." },
   { classe: "Féca", nom: "Tétanie", element: "Terre", min: 36, max: 40, critMin: 43, critMax: 48, parTour: 3, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 2, zone: true, sourceId: 13017, note: "Occasionne des dommages Terre et retire des PA." },
   { classe: "Féca", nom: "Atonie", element: "Feu", min: 31, max: 35, critMin: 38, critMax: 43, parTour: 1, relance: 0, poussee: 0, pa: 4, poMin: 0, poMax: 7, zone: true, sourceId: 13014, note: "Occasionne des dommages Feu et retire des PM aux ennemis en zone." },
@@ -41,7 +41,7 @@
   { classe: "Féca", nom: "Houlette", element: "Feu", min: 18, max: 20, critMin: 22, critMax: 24, parTour: 3, relance: 0, poussee: 0, pa: 2, poMin: 1, poMax: 7, zone: true, sourceId: 13007, note: "Occasionne des dommages Feu aux ennemis et attire la cible." },
   { classe: "Féca", nom: "Escapade", element: "Eau", min: 27, max: 29, critMin: 32, critMax: 35, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 6, zone: true, sourceId: 29045, note: "Éloigne le lanceur de la cible et occasionne des dommages Eau aux ennemis." },
   { classe: "Féca", nom: "Excursion", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 1, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 13024, note: "Pose un glyphe qui échange la position des alliés avec celle du lanceur.\nApplique également l\u0027Étoile du Berger sur les alliés qui déclenchent le glyphe." },
-  { classe: "Féca", nom: "Barrière", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 6, zone: true, sourceId: 13019, note: "Applique les états Pesanteur et Barrière sur la cible.\n\nSur un ennemi :\n• Pose un glyphe autour de lui au début de son tour qui occasionne des dommages Terre, Feu, Eau et Air.\n• Augmente les résistances à distance des alliés présents ou entrant à l\u0027intérieur de la zone.\n• Le glyphe n\u0027occasionne des dommages qu\u0027à cet ennemi s\u0027il le traverse.\n• Les états et le glyphe sont retirés si l\u0027ennemi traverse la Barrière ou s\u0027il est achevé.\n\nSur un allié :\n• Le glyphe est posé à la fin du tour du lanceur et n\u0027occasionne des dommages qu\u0027au premier ennemi qui le traverse.\n• Les états et le glyphe sont retirés si la cible ou un ennemi traverse la Barrière.\n\nSur une case libre : invoque la Lanterne du Berger et lui applique les effets du sort." },
+  { classe: "Féca", nom: "Barrière", element: "Terre / Feu / Eau / Air", min: 84, max: 88, critMin: 84, critMax: 88, hits: [{ element: "terre", min: 21, max: 22 }, { element: "feu", min: 21, max: 22 }, { element: "eau", min: 21, max: 22 }, { element: "air", min: 21, max: 22 }], parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 6, zone: true, sourceId: 13019, note: "Additionne 4 lignes de dégâts : Terre, Feu, Eau et Air.\nNormal : 21 à 22 par élément, 84 à 88 de base au total." },
   { classe: "Féca", nom: "Mise en Garde", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 0, zone: true, sourceId: 12997, note: "Augmente les caractéristiques du lanceur selon ses armures élémentaires actives, déclenche ses glyphes élémentaires sur la case ciblée et applique l\u0027Étoile du Berger sur les alliés dans ces glyphes.\n\nLes glyphes ne peuvent être déclenchés manuellement qu\u0027une seule fois par tour." },
   { classe: "Osamodas", nom: "Cri du Corbac", element: "Air", min: 13, max: 16, critMin: 18, critMax: 21, parTour: 3, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 7, zone: true, sourceId: 31110, note: "Vole de la vie aux ennemis ou soigne les alliés dans l\u0027élément Air.\nAugmente également les PM du lanceur et de l\u0027allié ciblé.\n\nLes soins n\u0027affectent pas le lanceur." },
   { classe: "Osamodas", nom: "Pics du Prespic", element: "Feu", min: 14, max: 17, critMin: 19, critMax: 22, parTour: 3, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 5, zone: true, sourceId: 31111, note: "Vole de la vie aux ennemis ou soigne les alliés dans l\u0027élément Feu.\nAugmente également les Critiques du lanceur et de l\u0027allié ciblé.\n\nLes soins n\u0027affectent pas le lanceur." },
@@ -218,7 +218,13 @@
   { classe: "Xélor", nom: "Sables du Temps", element: "Feu", min: 33, max: 36, critMin: 40, critMax: 43, parTour: 1, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 6, zone: true, sourceId: 13292, note: "Téléporte la cible à sa position précédente et occasionne des dommages Feu aux ennemis.\nRebondit sur l\u0027entité la plus proche dans un cercle de taille 2.\n\nLe rebond s\u0027effectue depuis la position initiale de chaque cible.\n\nPeut générer un {{spell,24510,1::\u003ccolor=#ebc304\u003eTéléfrag\u003c/color\u003e}}." },
   { classe: "Xélor", nom: "Espace-temps", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 13297, note: "Applique l\u0027état Espace-temps sur la cible :\n• Téléporte la cible et son attaquant à leur position précédente si elle subit des dommages.\n• Renvoie également une partie des dommages subis par la cible à son attaquant si c\u0027est un ennemi Téléfrag.\n\nPeut générer un {{spell,24510,1::\u003ccolor=#ebc304\u003eTéléfrag\u003c/color\u003e}}." },
   { classe: "Xélor", nom: "Vingt-cinquième Heure", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 5, poussee: 0, pa: 3, poMin: 0, poMax: 0, zone: true, sourceId: 14650, note: "Désactive les états Enraciné, Indéplaçable et Pesanteur sur le lanceur pour le tour en cours." },
-  { classe: "Xélor", nom: "Glas", element: "Feu / Eau / Air / Terre", min: 6, max: 6, critMin: 7, critMax: 7, parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: 13300, note: "Occasionne des dommages Feu, Eau, Air et Terre aux ennemis en zone.\n\nLes dommages sont augmentés pour chaque Téléfrag consommé depuis son dernier lancer.\nLes effets sont retirés après utilisation du sort.\n\nNécessite de consommer au moins un {{spell,24510,1::\u003ccolor=#ebc304\u003eTéléfrag\u003c/color\u003e}} pour être utilisé." },
+  { classe: "Xélor", nom: "Glas", element: "Feu / Eau / Air / Terre", min: 24, max: 24, critMin: 28, critMax: 28, hits: [{ element: "feu", min: 6, max: 6, critMin: 7, critMax: 7 }, { element: "eau", min: 6, max: 6, critMin: 7, critMax: 7 }, { element: "air", min: 6, max: 6, critMin: 7, critMax: 7 }, { element: "terre", min: 6, max: 6, critMin: 7, critMax: 7 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: 13300, note: "Additionne 4 lignes de dégâts : Feu, Eau, Air et Terre.\nNormal : 6 par élément, 24 de base au total.\nCritique : 7 par élément, 28 de base au total." },
+  { classe: "Xélor", nom: "Glas (1 charge)", element: "Feu / Eau / Air / Terre", min: 48, max: 48, critMin: 52, critMax: 52, hits: [{ element: "feu", min: 12, max: 12, critMin: 13, critMax: 13 }, { element: "eau", min: 12, max: 12, critMin: 13, critMax: 13 }, { element: "air", min: 12, max: 12, critMin: 13, critMax: 13 }, { element: "terre", min: 12, max: 12, critMin: 13, critMax: 13 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: "13300-1-charge", note: "Glas avec 1 charge : 12 dégâts Feu, Eau, Air et Terre. Critique : 13 par élément." },
+  { classe: "Xélor", nom: "Glas (2 charges)", element: "Feu / Eau / Air / Terre", min: 72, max: 72, critMin: 76, critMax: 76, hits: [{ element: "feu", min: 18, max: 18, critMin: 19, critMax: 19 }, { element: "eau", min: 18, max: 18, critMin: 19, critMax: 19 }, { element: "air", min: 18, max: 18, critMin: 19, critMax: 19 }, { element: "terre", min: 18, max: 18, critMin: 19, critMax: 19 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: "13300-2-charges", note: "Glas avec 2 charges : 18 dégâts Feu, Eau, Air et Terre. Critique : 19 par élément." },
+  { classe: "Xélor", nom: "Glas (3 charges)", element: "Feu / Eau / Air / Terre", min: 96, max: 96, critMin: 100, critMax: 100, hits: [{ element: "feu", min: 24, max: 24, critMin: 25, critMax: 25 }, { element: "eau", min: 24, max: 24, critMin: 25, critMax: 25 }, { element: "air", min: 24, max: 24, critMin: 25, critMax: 25 }, { element: "terre", min: 24, max: 24, critMin: 25, critMax: 25 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: "13300-3-charges", note: "Glas avec 3 charges : 24 dégâts Feu, Eau, Air et Terre. Critique : 25 par élément." },
+  { classe: "Xélor", nom: "Glas (4 charges)", element: "Feu / Eau / Air / Terre", min: 120, max: 120, critMin: 124, critMax: 124, hits: [{ element: "feu", min: 30, max: 30, critMin: 31, critMax: 31 }, { element: "eau", min: 30, max: 30, critMin: 31, critMax: 31 }, { element: "air", min: 30, max: 30, critMin: 31, critMax: 31 }, { element: "terre", min: 30, max: 30, critMin: 31, critMax: 31 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: "13300-4-charges", note: "Glas avec 4 charges : 30 dégâts Feu, Eau, Air et Terre. Critique : 31 par élément." },
+  { classe: "Xélor", nom: "Glas (5 charges)", element: "Feu / Eau / Air / Terre", min: 144, max: 144, critMin: 148, critMax: 148, hits: [{ element: "feu", min: 36, max: 36, critMin: 37, critMax: 37 }, { element: "eau", min: 36, max: 36, critMin: 37, critMax: 37 }, { element: "air", min: 36, max: 36, critMin: 37, critMax: 37 }, { element: "terre", min: 36, max: 36, critMin: 37, critMax: 37 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: "13300-5-charges", note: "Glas avec 5 charges : 36 dégâts Feu, Eau, Air et Terre. Critique : 37 par élément." },
+  { classe: "Xélor", nom: "Glas (6 charges)", element: "Feu / Eau / Air / Terre", min: 168, max: 168, critMin: 172, critMax: 172, hits: [{ element: "feu", min: 42, max: 42, critMin: 43, critMax: 43 }, { element: "eau", min: 42, max: 42, critMin: 43, critMax: 43 }, { element: "air", min: 42, max: 42, critMin: 43, critMax: 43 }, { element: "terre", min: 42, max: 42, critMin: 43, critMax: 43 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 3, zone: true, sourceId: "13300-6-charges", note: "Glas avec 6 charges : 42 dégâts Feu, Eau, Air et Terre. Critique : 43 par élément." },
   { classe: "Ecaflip", nom: "Réflexes", element: "Air", min: 14, max: 17, critMin: 20, critMax: 20, parTour: 3, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 12857, note: "Occasionne des dommages Air et augmente les PM du lanceur.\nLes dommages n\u0027affectent pas le lanceur.\n\nPioche un Valet de Pique." },
   { classe: "Ecaflip", nom: "Yams", element: "Eau", min: 3, max: 18, critMin: 21, critMax: 21, parTour: 3, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 29680, note: "Occasionne des dommages Eau et augmente les chances de Critique du lanceur.\nLes dommages n\u0027affectent pas le lanceur.\n\nPioche un Valet de Trèfle." },
   { classe: "Ecaflip", nom: "Topkaj", element: "Feu", min: 16, max: 22, critMin: 19, critMax: 25, parTour: 3, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 12846, note: "Occasionne des dommages Feu aux ennemis ou soigne les alliés.\n\nPioche un Valet de Cœur." },
@@ -583,7 +589,7 @@
   { classe: "Zobal", nom: "Cavalcade", element: "Air", min: 38, max: 42, critMin: 46, critMax: 50, parTour: 3, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 5, zone: true, sourceId: 13415, note: "Rapproche le lanceur vers la cible et occasionne des dommages Air aux ennemis." },
   { classe: "Zobal", nom: "Masque de l\u0027Intrépide", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 2, poussee: 0, pa: 1, poMin: 0, poMax: 0, zone: true, sourceId: 13386, note: "Applique le Masque de l\u0027Intrépide sur le lanceur :\n• Applique l\u0027état Intrépide sur le lanceur.\n• Augmente les PA du lanceur et de ses alliés (hors Zobals) dans une croix d\u0027une case.\n• Attire les entités vers le centre en zone." },
   { classe: "Zobal", nom: "Plastron", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 0, poMax: 0, zone: true, sourceId: 13397, note: "Applique un bouclier sur les alliés en zone.\nLe bouclier est réduit de moitié sur les invocations." },
-  { classe: "Zobal", nom: "Appui", element: "Feu / Terre / Eau / Air", min: 8, max: 9, critMin: 10, critMax: 11, parTour: null, relance: 2, poussee: 3, pa: 3, poMin: 1, poMax: 1, zone: true, sourceId: 13403, note: "Éloigne le lanceur de la cible et occasionne des dommages Feu, Terre, Eau et Air aux ennemis et repousse la cible." },
+  { classe: "Zobal", nom: "Appui", element: "Feu / Terre / Eau / Air", min: 32, max: 36, critMin: 40, critMax: 44, hits: [{ element: "feu", min: 8, max: 9, critMin: 10, critMax: 11 }, { element: "terre", min: 8, max: 9, critMin: 10, critMax: 11 }, { element: "eau", min: 8, max: 9, critMin: 10, critMax: 11 }, { element: "air", min: 8, max: 9, critMin: 10, critMax: 11 }], parTour: null, relance: 2, poussee: 3, pa: 3, poMin: 1, poMax: 1, zone: true, sourceId: 13403, note: "Additionne 4 lignes de dégâts : Feu, Terre, Eau et Air, puis ajoute les dommages de poussée.\nNormal : 8 à 9 par élément, 32 à 36 de base au total.\nCritique : 10 à 11 par élément, 40 à 44 de base au total." },
   { classe: "Zobal", nom: "Masque du Pleutre", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 2, poussee: 0, pa: 1, poMin: 0, poMax: 0, zone: true, sourceId: 13387, note: "Applique le Masque du Pleutre sur le lanceur :\n• Applique l\u0027état Pleutre sur le lanceur.\n• Augmente les PM et la Fuite du lanceur et de ses alliés (hors Zobals) en zone." },
   { classe: "Zobal", nom: "Ponteira", element: "Eau", min: 23, max: 26, critMin: 28, critMax: 31, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 7, zone: true, sourceId: 13422, note: "Occasionne des dommages Eau et retire des Dommages." },
   { classe: "Zobal", nom: "Masque du Psychopathe", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 2, poussee: 0, pa: 1, poMin: 0, poMax: 0, zone: true, sourceId: 13388, note: "Applique le Masque du Psychopathe sur le lanceur :\n• Applique l\u0027état Psychopathe sur le lanceur.\n• Augmente les dommages en mêlée et le Tacle du lanceur et de ses alliés (hors Zobals) en zone." },
@@ -657,7 +663,7 @@
   { classe: "Steamer", nom: "Blindage", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 3, poMin: 0, poMax: 7, zone: true, sourceId: 13863, note: "Applique un bouclier sur l\u0027allié ciblé et le rend Indéplaçable.\nLe bouclier est plus important sur les Tourelles." },
   { classe: "Steamer", nom: "Cabestan", element: "Terre", min: 29, max: 33, critMin: 35, critMax: 40, parTour: 1, relance: 0, poussee: 0, pa: 3, poMin: 0, poMax: 7, zone: true, sourceId: 13875, note: "Occasionne des dommages Terre aux ennemis et attire les cibles jusqu\u0027au centre en zone.\nTéléporte également symétriquement les entités par rapport au centre si le sort est ciblé sur une Tourelle.\n\nLes dommages de zone ne sont pas dégressifs.\nL\u0027attirance n\u0027affecte pas le lanceur." },
   { classe: "Steamer", nom: "Écume", element: "Eau", min: 32, max: 36, critMin: 38, critMax: 43, parTour: 2, relance: 0, poussee: 3, pa: 4, poMin: 1, poMax: 6, zone: true, sourceId: 13825, note: "Occasionne des dommages Eau aux ennemis et déplace les cibles selon la Marée en zone :\n• Marée Basse : attire les cibles vers le lanceur.\n• Marée Haute : repousse les cibles depuis le lanceur." },
-  { classe: "Steamer", nom: "Embuscade", element: "Eau / Terre / Feu / Air", min: 7, max: 9, critMin: 10, critMax: 12, parTour: 1, relance: 0, poussee: 0, pa: 4, poMin: 2, poMax: 6, zone: true, sourceId: 13835, note: "Active les sorts spéciaux des Tourelles offensives du lanceur sur la cible.\n\nOccasionne des dommages Eau, Terre, Air et Feu." },
+  { classe: "Steamer", nom: "Embuscade", element: "Eau / Terre / Feu / Air", min: 28, max: 36, critMin: 40, critMax: 48, hits: [{ element: "eau", min: 7, max: 9, critMin: 10, critMax: 12 }, { element: "terre", min: 7, max: 9, critMin: 10, critMax: 12 }, { element: "feu", min: 7, max: 9, critMin: 10, critMax: 12 }, { element: "air", min: 7, max: 9, critMin: 10, critMax: 12 }], parTour: 1, relance: 0, poussee: 0, pa: 4, poMin: 2, poMax: 6, zone: true, sourceId: 13835, note: "Additionne 4 lignes de dégâts : Eau, Terre, Feu et Air.\nNormal : 7 à 9 par élément, 28 à 36 de base au total.\nCritique : 10 à 12 par élément, 40 à 48 de base au total." },
   { classe: "Steamer", nom: "Harmattan", element: "Air", min: 31, max: 35, critMin: 37, critMax: 42, parTour: null, relance: 1, poussee: 2, pa: 4, poMin: 1, poMax: 6, zone: true, sourceId: 13861, note: "Repousse la cible et occasionne des dommages Air aux ennemis.\nRebondit sur les entités au contact de la cible." },
   { classe: "Steamer", nom: "Sauvetage", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 5, zone: true, sourceId: 13871, note: "Active les sorts spéciaux des Tourelles défensives du lanceur sur l\u0027allié ciblé.\n\nSoigne la cible." },
   { classe: "Steamer", nom: "Court-circuit", element: "Feu", min: 33, max: 37, critMin: 40, critMax: 44, parTour: 1, relance: 0, poussee: 0, pa: 4, poMin: 1, poMax: 7, zone: true, sourceId: 13872, note: "Occasionne des dommages Feu aux ennemis en zone autour d\u0027une Tourelle.\n\nÉvolue également la Tourelle et augmente ses chances de Critique." },
@@ -730,7 +736,7 @@
   { classe: "Huppermage", nom: "Polarité", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 3, pa: 1, poMin: 1, poMax: 4, zone: true, sourceId: 13696, note: "Consomme l\u0027état élémentaire sur l\u0027ennemi ciblé pour appliquer des effets selon son état élémentaire :\n• \u003csprite name=\"terre\"\u003e Terre : repousse la cible.\n• \u003csprite name=\"feu\"\u003e Feu : échange de position avec la cible.\n• \u003csprite name=\"eau\"\u003e Eau : attire la cible.\n• \u003csprite name=\"air\"\u003e Air : téléporte le lanceur symétriquement par rapport à la cible." },
   { classe: "Huppermage", nom: "Surcharge Runique", element: "Eau / Feu / Air / Terre", min: 10, max: 10, critMin: 10, critMax: 10, parTour: 1, relance: 0, poussee: 0, pa: 3, poMin: 0, poMax: 6, zone: true, sourceId: 13724, note: "Déclenche toutes les runes du lanceur pour occasionner des dommages à l\u0027ennemi ou soigner l\u0027allié ciblé pour chaque rune déclenchée dans l\u0027élément des runes." },
   { classe: "Huppermage", nom: "Propagation", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 1, poMin: 1, poMax: 8, zone: true, sourceId: 13695, note: "Applique des effets et propage les états sur les ennemis en zone selon l\u0027état élémentaire de l\u0027ennemi ciblé :\n• \u003csprite name=\"terre\"\u003e Terre : réduit les Résistances Poussée.\n• \u003csprite name=\"feu\"\u003e Feu : retire des Critiques.\n• \u003csprite name=\"eau\"\u003e Eau : retire de la Fuite.\n• \u003csprite name=\"air\"\u003e Air : retire du Tacle.\n\nPeut générer des {{spell,23876,1::Combinaisons Élémentaires}}." },
-  { classe: "Huppermage", nom: "Supernova", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 0, poMax: 6, zone: true, sourceId: 32033, note: "Réduit la durée des effets sur la cible et occasionne des dommages dans les meilleurs et pires éléments du lanceur aux ennemis.\nPose une rune du pire élément.\n\nPeut générer des {{spell,23876,1::Combinaisons Élémentaires}}." },
+  { classe: "Huppermage", nom: "Supernova", element: "Meilleur element / Pire element", min: 28, max: 32, critMin: 35, critMax: 39, hits: [{ element: "meilleur", min: 19, max: 21, critMin: 23, critMax: 25 }, { element: "pire", min: 9, max: 11, critMin: 12, critMax: 14 }], parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 0, poMax: 6, zone: true, sourceId: 32033, note: "Additionne 2 lignes de dégâts : meilleur élément et pire élément du lanceur.\nNormal : 19 à 21 meilleur élément + 9 à 11 pire élément.\nCritique : 23 à 25 meilleur élément + 12 à 14 pire élément." },
   { classe: "Huppermage", nom: "Cataracte", element: "Eau", min: 14, max: 16, critMin: 17, critMax: 19, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 4, zone: true, sourceId: 13711, note: "Occasionne des dommages et vole de la vie dans l\u0027élément Eau.\n\nPeut générer des {{spell,23876,1::Combinaisons Élémentaires}}." },
   { classe: "Huppermage", nom: "Onde Céleste", element: "Air", min: 12, max: 14, critMin: 15, critMax: 17, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 8, zone: true, sourceId: 13708, note: "Occasionne des dommages et vole de la vie dans l\u0027élément Air.\n\nPeut générer des {{spell,23876,1::Combinaisons Élémentaires}}." },
   { classe: "Huppermage", nom: "Lances Telluriques", element: "Terre", min: 11, max: 13, critMin: 14, critMax: 16, parTour: 2, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 6, zone: true, sourceId: 13709, note: "Occasionne des dommages et vole de la vie dans l\u0027élément Terre.\n\nPeut générer des {{spell,23876,1::Combinaisons Élémentaires}}." },
@@ -752,7 +758,12 @@
   { classe: "Huppermage", nom: "Convection", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 2, relance: 1, poussee: 0, pa: 1, poMin: 1, poMax: 4, zone: true, sourceId: 13716, note: "Consomme l\u0027état élémentaire sur l\u0027ennemi ciblé pour appliquer des effets selon son état élémentaire :\n• \u003csprite name=\"terre\"\u003e Terre : éloigne le lanceur de la cible.\n• \u003csprite name=\"feu\"\u003e Feu : téléporte la cible et le lanceur à leur position précédente.\n• \u003csprite name=\"eau\"\u003e Eau : rapproche le lanceur vers la cible.\n• \u003csprite name=\"air\"\u003e Air : téléporte la cible symétriquement par rapport au lanceur." },
   { classe: "Huppermage", nom: "Sublimation", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 3, poussee: 0, pa: 2, poMin: 1, poMax: 7, zone: true, sourceId: 13684, note: "Applique l\u0027état Sublimation sur l\u0027ennemi ciblé :\n• Retire des caractéristiques à la cible, augmente celles de l\u0027attaquant et applique un état sur la cible selon l\u0027élément de l\u0027attaque qu\u0027elle subit (cumulable 4 fois).\n\nPeut générer des {{spell,23876,1::Combinaisons Élémentaires}}." },
   { classe: "Huppermage", nom: "Prisme Runique", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: 1, relance: 0, poussee: 0, pa: 2, poMin: 0, poMax: 6, zone: true, sourceId: 13719, note: "Déclenche une rune du lanceur pour appliquer des effets et un état élémentaire sur les ennemis en zone selon son élément :\n• \u003csprite name=\"terre\"\u003e Terre : réduit la durée des effets sur les cibles.\n• \u003csprite name=\"feu\"\u003e Feu : réduit les soins reçus par les cibles.\n• \u003csprite name=\"eau\"\u003e Eau : érode les cibles.\n• \u003csprite name=\"air\"\u003e Air : soigne les attaquants des cibles.\n\nPeut générer des {{spell,23876,1::Combinaisons Élémentaires}}." },
-  { classe: "Huppermage", nom: "Torrent Arcanique", element: "Air / Terre / Feu / Eau", min: 4, max: 4, critMin: 6, critMax: 6, parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 1, poMax: 8, zone: true, sourceId: 14342, note: "Applique l\u0027état Pesanteur sur les cibles et occasionne des dommages Air, Terre, Feu et Eau aux ennemis en zone.\nLes dommages du sort sont augmentés pour chaque combinaison élémentaire générée par le lanceur.\n\nLes effets sont réinitialisés après utilisation du sort." },
+  { classe: "Huppermage", nom: "Torrent Arcanique (1 charge)", element: "Air / Terre / Feu / Eau", min: 32, max: 32, critMin: 40, critMax: 40, hits: [{ element: "air", min: 8, max: 8, critMin: 10, critMax: 10 }, { element: "terre", min: 8, max: 8, critMin: 10, critMax: 10 }, { element: "feu", min: 8, max: 8, critMin: 10, critMax: 10 }, { element: "eau", min: 8, max: 8, critMin: 10, critMax: 10 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 1, poMax: 8, zone: true, sourceId: "14342-1-charge", note: "Torrent Arcanique avec 1 charge : 8 dégâts Air, Terre, Feu et Eau. Critique : 10 par élément." },
+  { classe: "Huppermage", nom: "Torrent Arcanique (2 charges)", element: "Air / Terre / Feu / Eau", min: 48, max: 48, critMin: 56, critMax: 56, hits: [{ element: "air", min: 12, max: 12, critMin: 14, critMax: 14 }, { element: "terre", min: 12, max: 12, critMin: 14, critMax: 14 }, { element: "feu", min: 12, max: 12, critMin: 14, critMax: 14 }, { element: "eau", min: 12, max: 12, critMin: 14, critMax: 14 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 1, poMax: 8, zone: true, sourceId: "14342-2-charges", note: "Torrent Arcanique avec 2 charges : 12 dégâts Air, Terre, Feu et Eau. Critique : 14 par élément." },
+  { classe: "Huppermage", nom: "Torrent Arcanique (3 charges)", element: "Air / Terre / Feu / Eau", min: 64, max: 64, critMin: 72, critMax: 72, hits: [{ element: "air", min: 16, max: 16, critMin: 18, critMax: 18 }, { element: "terre", min: 16, max: 16, critMin: 18, critMax: 18 }, { element: "feu", min: 16, max: 16, critMin: 18, critMax: 18 }, { element: "eau", min: 16, max: 16, critMin: 18, critMax: 18 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 1, poMax: 8, zone: true, sourceId: "14342-3-charges", note: "Torrent Arcanique avec 3 charges : 16 dégâts Air, Terre, Feu et Eau. Critique : 18 par élément." },
+  { classe: "Huppermage", nom: "Torrent Arcanique (4 charges)", element: "Air / Terre / Feu / Eau", min: 80, max: 80, critMin: 88, critMax: 88, hits: [{ element: "air", min: 20, max: 20, critMin: 22, critMax: 22 }, { element: "terre", min: 20, max: 20, critMin: 22, critMax: 22 }, { element: "feu", min: 20, max: 20, critMin: 22, critMax: 22 }, { element: "eau", min: 20, max: 20, critMin: 22, critMax: 22 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 1, poMax: 8, zone: true, sourceId: "14342-4-charges", note: "Torrent Arcanique avec 4 charges : 20 dégâts Air, Terre, Feu et Eau. Critique : 22 par élément." },
+  { classe: "Huppermage", nom: "Torrent Arcanique (5 charges)", element: "Air / Terre / Feu / Eau", min: 96, max: 96, critMin: 104, critMax: 104, hits: [{ element: "air", min: 24, max: 24, critMin: 26, critMax: 26 }, { element: "terre", min: 24, max: 24, critMin: 26, critMax: 26 }, { element: "feu", min: 24, max: 24, critMin: 26, critMax: 26 }, { element: "eau", min: 24, max: 24, critMin: 26, critMax: 26 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 1, poMax: 8, zone: true, sourceId: "14342-5-charges", note: "Torrent Arcanique avec 5 charges : 24 dégâts Air, Terre, Feu et Eau. Critique : 26 par élément." },
+  { classe: "Huppermage", nom: "Torrent Arcanique (6 charges)", element: "Air / Terre / Feu / Eau", min: 112, max: 112, critMin: 120, critMax: 120, hits: [{ element: "air", min: 28, max: 28, critMin: 30, critMax: 30 }, { element: "terre", min: 28, max: 28, critMin: 30, critMax: 30 }, { element: "feu", min: 28, max: 28, critMin: 30, critMax: 30 }, { element: "eau", min: 28, max: 28, critMin: 30, critMax: 30 }], parTour: null, relance: 3, poussee: 0, pa: 4, poMin: 1, poMax: 8, zone: true, sourceId: "14342-6-charges", note: "Torrent Arcanique avec 6 charges : 28 dégâts Air, Terre, Feu et Eau. Critique : 30 par élément." },
   { classe: "Ouginak", nom: "Molosse", element: "Terre", min: 31, max: 34, critMin: 37, critMax: 41, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 2, zone: true, sourceId: 13756, note: "Occasionne des dommages Terre aux ennemis et réduit les dommages subis par le lanceur.\n\nAugmente la Rage (nécessite une cible)." },
   { classe: "Ouginak", nom: "Os à Moelle", element: "Eau", min: 21, max: 24, critMin: 25, critMax: 29, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 8, zone: true, sourceId: 13762, note: "Occasionne des dommages Eau.\nLes dommages du sort sont augmentés après chaque lancer si la cible est la Proie." },
   { classe: "Ouginak", nom: "Charogne", element: "Air", min: 29, max: 32, critMin: 35, critMax: 38, parTour: 3, relance: 0, poussee: 0, pa: 3, poMin: 1, poMax: 4, zone: true, sourceId: 13766, note: "Érode la cible et occasionne des dommages Air.\n\nAugmente la Rage (nécessite une cible)." },
@@ -842,6 +853,8 @@
   { classe: "Forgelance", nom: "Elding", element: "Eau", min: 36, max: 40, critMin: 43, critMax: 48, parTour: null, relance: 2, poussee: 0, pa: 4, poMin: 1, poMax: 6, zone: true, sourceId: 23396, note: "Invoque la Lance, attire les cibles vers le centre et occasionne des dommages Eau aux ennemis en zone.\nN\u0027affecte pas le lanceur." },
   { classe: "Forgelance", nom: "Holmgang", element: "-", min: null, max: null, critMin: null, critMax: null, parTour: null, relance: 4, poussee: 0, pa: 4, poMin: 0, poMax: 0, zone: true, sourceId: 23846, note: "Rappelle la Lance et remplace la Garde par le Holmgang :\n• Rend le lanceur Indéplaçable.\n• Réduit les dommages subis à distance.\n• Pose un glyphe-aura qui attire les ennemis qui le traversent ou qui en sortent et leur occasionne des dommages dans le meilleur élément d\u0027attaque du lanceur (une fois par ennemi par tour).\n\nTermine le tour en cours du lanceur." },
 ];
+
+window.DOFUS_SPELLS = spells;
 
 const state = {
   selected: spells.find((spell) => spell.max !== null) ?? spells[0],
@@ -954,11 +967,15 @@ function damageRange(spell) {
 
 function damageHits(spell) {
   if (Array.isArray(spell.hits) && spell.hits.length > 0) {
-    return spell.hits.map((hit) => ({
-      element: hit.element,
-      min: state.crit ? hit.critMin ?? hit.min : hit.min,
-      max: state.crit ? hit.critMax ?? hit.max : hit.max,
-    }));
+    return spell.hits.map((hit) => {
+      const min = state.crit ? hit.critMin ?? hit.min : hit.min;
+      const max = state.crit ? hit.critMax ?? hit.max : hit.max;
+      return {
+        element: resolveHitElement(hit, { min, max }),
+        min,
+        max,
+      };
+    });
   }
 
   const range = damageRange(spell);
@@ -991,6 +1008,8 @@ function selectedDamageElement(spell) {
 function isBestElementSpell(spell) {
   return normalize(spell.element).includes("meilleur");
 }
+
+const attackElements = ["terre", "feu", "air", "eau"];
 
 function elementStats(element) {
   const statInputs = {
@@ -1091,13 +1110,34 @@ function bestElementForRange(spell, range) {
   const manual = elements.damageElementInput.value;
   if (manual !== "auto" || !isBestElementSpell(spell)) return selectedDamageElement(spell);
 
-  return ["terre", "feu", "air", "eau"]
+  return bestElementForValues(range.min, range.max);
+}
+
+function bestElementForValues(min, max) {
+  return attackElements
     .map((element) => ({
       element,
-      min: calculateDamage(range.min, element),
-      max: calculateDamage(range.max, element),
+      min: calculateDamage(min, element),
+      max: calculateDamage(max, element),
     }))
     .sort((a, b) => b.max - a.max || b.min - a.min)[0].element;
+}
+
+function worstElementForValues(min, max) {
+  return attackElements
+    .map((element) => ({
+      element,
+      min: calculateDamage(min, element),
+      max: calculateDamage(max, element),
+    }))
+    .sort((a, b) => a.max - b.max || a.min - b.min)[0].element;
+}
+
+function resolveHitElement(hit, range) {
+  const cleaned = normalize(hit.element);
+  if (cleaned.includes("meilleur")) return bestElementForValues(range.min, range.max);
+  if (cleaned.includes("pire")) return worstElementForValues(range.min, range.max);
+  return hit.element;
 }
 
 function resultElementClass(element) {
@@ -1315,49 +1355,51 @@ function render() {
   renderTimeline();
 }
 
-renderClassOptions();
-renderElementOptions();
-render();
-
-elements.searchInput.addEventListener("input", renderSpellList);
-elements.classFilter.addEventListener("change", () => {
-  const visible = filteredSpells();
-  if (visible.length > 0 && !visible.some((spell) => spellKey(spell) === spellKey(state.selected))) {
-    state.selected = visible[0];
-  }
+if (elements.spellList && elements.searchInput && elements.damageResult) {
+  renderClassOptions();
+  renderElementOptions();
   render();
-});
-elements.elementFilter.addEventListener("change", renderSpellList);
-elements.sortMode.addEventListener("change", renderSpellList);
-elements.castSpell.addEventListener("click", castSelectedSpell);
-elements.nextTurn.addEventListener("click", nextTurn);
-elements.prevTurn.addEventListener("click", prevTurn);
-elements.resetFight.addEventListener("click", resetFight);
-elements.clearCooldowns.addEventListener("click", () => {
-  state.cooldowns.clear();
-  render();
-});
 
-Object.values(elements)
-  .filter((element) => element instanceof HTMLInputElement || element instanceof HTMLSelectElement)
-  .forEach((input) => {
-    input.addEventListener("input", renderSelectedSpell);
-    input.addEventListener("change", renderSelectedSpell);
+  elements.searchInput.addEventListener("input", renderSpellList);
+  elements.classFilter.addEventListener("change", () => {
+    const visible = filteredSpells();
+    if (visible.length > 0 && !visible.some((spell) => spellKey(spell) === spellKey(state.selected))) {
+      state.selected = visible[0];
+    }
+    render();
+  });
+  elements.elementFilter.addEventListener("change", renderSpellList);
+  elements.sortMode.addEventListener("change", renderSpellList);
+  elements.castSpell.addEventListener("click", castSelectedSpell);
+  elements.nextTurn.addEventListener("click", nextTurn);
+  elements.prevTurn.addEventListener("click", prevTurn);
+  elements.resetFight.addEventListener("click", resetFight);
+  elements.clearCooldowns.addEventListener("click", () => {
+    state.cooldowns.clear();
+    render();
   });
 
-elements.normalMode.addEventListener("click", () => {
-  state.crit = false;
-  elements.normalMode.classList.add("active");
-  elements.critMode.classList.remove("active");
-  renderSelectedSpell();
-});
+  Object.values(elements)
+    .filter((element) => element instanceof HTMLInputElement || element instanceof HTMLSelectElement)
+    .forEach((input) => {
+      input.addEventListener("input", renderSelectedSpell);
+      input.addEventListener("change", renderSelectedSpell);
+    });
 
-elements.critMode.addEventListener("click", () => {
-  state.crit = true;
-  elements.critMode.classList.add("active");
-  elements.normalMode.classList.remove("active");
-  renderSelectedSpell();
-});
+  elements.normalMode.addEventListener("click", () => {
+    state.crit = false;
+    elements.normalMode.classList.add("active");
+    elements.critMode.classList.remove("active");
+    renderSelectedSpell();
+  });
+
+  elements.critMode.addEventListener("click", () => {
+    state.crit = true;
+    elements.critMode.classList.add("active");
+    elements.normalMode.classList.remove("active");
+    renderSelectedSpell();
+  });
+}
 
 
 
