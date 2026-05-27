@@ -965,6 +965,10 @@ function damageRange(spell) {
     : { min: spell.min, max: spell.max };
 }
 
+function isMultiLineSpell(spell) {
+  return Array.isArray(spell.hits) && spell.hits.length > 1;
+}
+
 function damageHits(spell) {
   if (Array.isArray(spell.hits) && spell.hits.length > 0) {
     return spell.hits.map((hit) => {
@@ -1173,7 +1177,10 @@ function filteredSpells() {
   const result = spells.filter((spell) => {
     const matchesQuery = normalize(spell.nom).includes(query);
     const matchesClass = selectedClass === "all" || spell.classe === selectedClass;
-    const matchesElement = element === "all" || spell.element === element;
+    const matchesElement =
+      element === "all" ||
+      (element === "multi" && isMultiLineSpell(spell)) ||
+      spell.element === element;
     return matchesQuery && matchesClass && matchesElement;
   });
 
@@ -1197,6 +1204,11 @@ function renderClassOptions() {
 }
 
 function renderElementOptions() {
+  const multiOption = document.createElement("option");
+  multiOption.value = "multi";
+  multiOption.textContent = "Multi lignes";
+  elements.elementFilter.append(multiOption);
+
   const uniqueElements = [...new Set(spells.map((spell) => spell.element).filter(Boolean))].sort();
   uniqueElements.forEach((element) => {
     const option = document.createElement("option");
