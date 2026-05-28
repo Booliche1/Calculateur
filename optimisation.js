@@ -254,15 +254,16 @@ function optWith(config, mutate) {
 
 function optBonusDefinitions(config) {
   return [
-    { label: "+10 Force", type: "stat", unit: 10, apply: (draft) => { draft.force += 10; } },
-    { label: "+10 Intelligence", type: "stat", unit: 10, apply: (draft) => { draft.intelligence += 10; } },
-    { label: "+10 Chance", type: "stat", unit: 10, apply: (draft) => { draft.chance += 10; } },
-    { label: "+10 Agilite", type: "stat", unit: 10, apply: (draft) => { draft.agility += 10; } },
-    { label: "+10 Puissance", type: "power", unit: 10, apply: (draft) => { draft.power += 10; } },
+    { label: "+5 Force", shortLabel: "Force", type: "stat", statName: "force", unit: 5, apply: (draft) => { draft.force += 5; } },
+    { label: "+5 Intelligence", shortLabel: "Intelligence", type: "stat", statName: "intelligence", unit: 5, apply: (draft) => { draft.intelligence += 5; } },
+    { label: "+5 Chance", shortLabel: "Chance", type: "stat", statName: "chance", unit: 5, apply: (draft) => { draft.chance += 5; } },
+    { label: "+5 Agilite", shortLabel: "Agilite", type: "stat", statName: "agilite", unit: 5, apply: (draft) => { draft.agility += 5; } },
+    { label: "+5 Puissance", shortLabel: "Puissance", type: "power", unit: 5, apply: (draft) => { draft.power += 5; } },
     { label: "+1 dommage fixe", type: "flat", unit: 1, apply: (draft) => { draft.flatDamage += 1; } },
-    { label: "+12 dommages fixes", type: "flat-bundle", unit: 12, apply: (draft) => { draft.flatDamage += 12; } },
     { label: "+1 dommage critique", type: "crit", unit: 1, apply: (draft) => { draft.critDamage += 1; } },
     { label: "+1% dommages sorts", type: "percent", unit: 1, apply: (draft) => { draft.spellDamage += 1; } },
+    { label: "+1% dommages distance", type: "percent", unit: 1, apply: (draft) => { draft.distanceDamage += 1; } },
+    { label: "+1% dommages melee", type: "percent", unit: 1, apply: (draft) => { draft.meleeDamage += 1; } },
     { label: "+1 dommage terre", type: "elemental", unit: 1, apply: (draft) => { draft.earthDamage += 1; } },
     { label: "+1 dommage feu", type: "elemental", unit: 1, apply: (draft) => { draft.fireDamage += 1; } },
     { label: "+1 dommage eau", type: "elemental", unit: 1, apply: (draft) => { draft.waterDamage += 1; } },
@@ -362,26 +363,36 @@ function optRenderResults() {
 
 function optRenderEquivalences(results) {
   const fixed = results.find((item) => item.label === "+1 dommage fixe");
-  const spellPercent = results.find((item) => item.label === "+1% dommages sorts");
   const statRows = results.filter((item) => item.type === "stat");
+  const percentRows = results.filter((item) => item.type === "percent");
   const lines = [];
 
   if (fixed) {
     statRows.forEach((stat) => {
-      const oneStatGain = stat.gain / 10;
-      if (oneStatGain > 0) lines.push(`1 dommage fixe ≈ ${optFormat(fixed.gain / oneStatGain)} ${stat.label.replace("+10 ", "").toLowerCase()}`);
+      const oneStatGain = stat.gain / stat.unit;
+      if (oneStatGain > 0) lines.push(`1 dommage fixe ≈ ${optFormat(fixed.gain / oneStatGain)} ${stat.shortLabel.toLowerCase()}`);
     });
   }
 
-  if (spellPercent) {
+  percentRows.forEach((percentBonus) => {
     statRows.forEach((stat) => {
-      const oneStatGain = stat.gain / 10;
-      if (oneStatGain > 0) lines.push(`1% dommages sorts ≈ ${optFormat(spellPercent.gain / oneStatGain)} ${stat.label.replace("+10 ", "").toLowerCase()}`);
+      const oneStatGain = stat.gain / stat.unit;
+      if (oneStatGain > 0) lines.push(`${percentBonus.label.replace("+1", "1")} ≈ ${optFormat(percentBonus.gain / oneStatGain)} ${stat.shortLabel.toLowerCase()}`);
     });
+    if (fixed?.gain > 0) lines.push(`${percentBonus.label.replace("+1", "1")} ≈ ${optFormat(percentBonus.gain / fixed.gain)} dommage fixe`);
+  });
+
+  if (fixed) {
+    const bestStat = statRows.slice().sort((a, b) => b.gain - a.gain)[0];
+    if (bestStat?.gain > 0) {
+      const oneStatGain = bestStat.gain / bestStat.unit;
+      const threshold = fixed.gain / oneStatGain;
+      lines.push(`Lecture rapide : sur cette analyse, 1 dommage fixe vaut environ ${optFormat(threshold)} ${bestStat.shortLabel.toLowerCase()}.`);
+    }
   }
 
   const averageLineBase = optAverageLineBase();
-  lines.push(`Seuil theorique : sur une ligne de base ${optFormat(averageLineBase)}, +10 stat vaut environ +${optFormat(averageLineBase / 10)} avant resistances.`);
+  lines.push(`Repere theorique : sur une ligne de base ${optFormat(averageLineBase)}, +5 stat vaut environ +${optFormat(averageLineBase / 20)} avant resistances.`);
   lines.push("Les dommages fixes ne baissent pas avec tes stats : ils sont surtout meilleurs sur les petits jets et les sorts multi-lignes.");
 
   optEls.equivalences.innerHTML = lines.map((line) => `<p>${line}</p>`).join("");
