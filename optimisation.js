@@ -276,16 +276,16 @@ const optElementToStat = {
   air: "agility",
 };
 
-function optUsefulStats(config) {
+function optUsefulElements(config) {
   const crit = optEls.damageMode.value === "crit";
-  const stats = new Set();
+  const elements = new Map();
   optTargetSpells().forEach((spell) => {
     optHits(spell, config, crit).forEach((hit) => {
       const stat = optElementToStat[hit.element];
-      if (stat) stats.add(stat);
+      if (stat && !elements.has(hit.element)) elements.set(hit.element, stat);
     });
   });
-  return [...stats];
+  return [...elements].map(([element, stat]) => ({ element, stat }));
 }
 
 function optStatDelta(stat, amount) {
@@ -298,10 +298,11 @@ function optComparisonRows(config, baseline) {
   const fixedAmount = config.fixedAmount;
   const statAmount = config.statAmount;
   const fixedGain = optTotalDamage(optWith(config, (draft) => { draft.flatDamage += fixedAmount; })) - baseline;
-  return optUsefulStats(config).map((stat) => {
+  return optUsefulElements(config).map(({ element, stat }) => {
     const statGain = optTotalDamage(optWith(config, optStatDelta(stat, statAmount))) - baseline;
     const statPerUnit = statAmount > 0 ? statGain / statAmount : 0;
     return {
+      element,
       stat,
       statLabel: optStatLabels[stat],
       fixedAmount,
@@ -414,6 +415,7 @@ function optRenderSimpleResults() {
     .sort((a, b) => Math.max(b.fixedGain, b.statGain) - Math.max(a.fixedGain, a.statGain))[0];
 
   optEls.baseline.textContent = `Base analysee : ${optFormat(baseline)} degats moyens`;
+  optApplyVerdictElement(null);
   if (!bestRow) {
     optEls.verdict.textContent = "-";
     optEls.verdictDetail.textContent = "Aucune ligne de degats exploitable pour ce sort.";
@@ -421,6 +423,7 @@ function optRenderSimpleResults() {
     return;
   }
 
+  optApplyVerdictElement(bestRow.element);
   const fixedLabel = `+${optFormat(config.fixedAmount)} dommage${config.fixedAmount > 1 ? "s" : ""} fixe${config.fixedAmount > 1 ? "s" : ""}`;
   const statLabel = `+${optFormat(config.statAmount)} ${bestRow.statLabel}`;
   if (bestRow.winner === "fixed") {
@@ -435,6 +438,17 @@ function optRenderSimpleResults() {
   }
 
   optRenderComparison(config, baseline);
+}
+
+function optElementClass(element) {
+  return optNormalize(element || "neutre");
+}
+
+function optApplyVerdictElement(element) {
+  ["terre", "feu", "air", "eau", "neutre", "multi"].forEach((name) => {
+    optEls.verdict.classList.remove(`result-${name}`);
+  });
+  if (element) optEls.verdict.classList.add(`result-${optElementClass(element)}`);
 }
 
 function optRenderComparison(config, baseline) {
@@ -454,11 +468,11 @@ function optRenderComparison(config, baseline) {
     ${rows.map((row) => `
       <div class="opt-compare-row">
         <strong>${row.statLabel}</strong>
-        <div class="opt-compare-cell ${row.winner === "fixed" ? "winner" : row.winner === "tie" ? "tie" : ""}">
+        <div class="opt-compare-cell element-${optElementClass(row.element)} ${row.winner === "fixed" ? "winner" : row.winner === "tie" ? "tie" : ""}">
           <span>+${optFormat(row.fixedGain)}</span>
           <small>degats</small>
         </div>
-        <div class="opt-compare-cell ${row.winner === "stat" ? "winner" : row.winner === "tie" ? "tie" : ""}">
+        <div class="opt-compare-cell element-${optElementClass(row.element)} ${row.winner === "stat" ? "winner" : row.winner === "tie" ? "tie" : ""}">
           <span>+${optFormat(row.statGain)}</span>
           <small>degats</small>
         </div>

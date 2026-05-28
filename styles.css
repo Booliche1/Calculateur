@@ -1021,6 +1021,36 @@ select:focus {
   box-shadow: 0 0 0 1px rgb(151 234 147 / 20%), 0 10px 24px rgb(58 160 84 / 14%);
 }
 
+.opt-compare-cell.winner.element-terre {
+  background: linear-gradient(135deg, #5a4716, #c39735);
+  border-color: #f1d75d;
+  box-shadow: 0 0 0 1px rgb(241 215 93 / 18%), 0 10px 24px rgb(212 169 68 / 15%);
+}
+
+.opt-compare-cell.winner.element-feu {
+  background: linear-gradient(135deg, #642119, #d94535);
+  border-color: #ff796d;
+  box-shadow: 0 0 0 1px rgb(255 121 109 / 18%), 0 10px 24px rgb(239 98 77 / 15%);
+}
+
+.opt-compare-cell.winner.element-air {
+  background: linear-gradient(135deg, #1f5d35, #63ad63);
+  border-color: #8de08a;
+  box-shadow: 0 0 0 1px rgb(141 224 138 / 18%), 0 10px 24px rgb(105 201 122 / 15%);
+}
+
+.opt-compare-cell.winner.element-eau {
+  background: linear-gradient(135deg, #164568, #3189d1);
+  border-color: #76c7ff;
+  box-shadow: 0 0 0 1px rgb(118 199 255 / 18%), 0 10px 24px rgb(60 158 232 / 15%);
+}
+
+.opt-compare-cell.winner.element-neutre {
+  background: linear-gradient(135deg, #343c45, #6e7882);
+  border-color: #aeb8c0;
+  box-shadow: 0 0 0 1px rgb(174 184 192 / 18%), 0 10px 24px rgb(135 148 162 / 15%);
+}
+
 .opt-compare-cell.tie {
   background: linear-gradient(135deg, rgb(131 112 41 / 88%), rgb(82 73 36 / 86%));
   border-color: rgb(248 217 102 / 58%);
