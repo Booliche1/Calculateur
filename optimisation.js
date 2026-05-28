@@ -17,14 +17,17 @@ const optEls = {
   clearRotation: document.querySelector("#optClearRotation"),
   rotationList: document.querySelector("#optRotationList"),
   comparison: document.querySelector("#optComparison"),
-  results: document.querySelector("#optResults"),
-  thresholds: document.querySelector("#optThresholds"),
-  equivalences: document.querySelector("#optEquivalences"),
   hitDetails: document.querySelector("#optHitDetails"),
   verdict: document.querySelector("#optVerdict"),
   verdictDetail: document.querySelector("#optVerdictDetail"),
   baseline: document.querySelector("#optBaseline"),
+  fixedMinus: document.querySelector("#optFixedMinus"),
+  fixedPlus: document.querySelector("#optFixedPlus"),
+  statMinus: document.querySelector("#optStatMinus"),
+  statPlus: document.querySelector("#optStatPlus"),
   inputs: {
+    fixedAmount: document.querySelector("#optFixedAmount"),
+    statAmount: document.querySelector("#optStatAmount"),
     critChance: document.querySelector("#optCritChanceInput"),
     rangeType: document.querySelector("#optRangeTypeInput"),
   },
@@ -65,6 +68,8 @@ function optConfig() {
     finalDamage: optNumber(inputs.finalDamage),
     distanceDamage: optNumber(inputs.distanceDamage),
     meleeDamage: optNumber(inputs.meleeDamage),
+    fixedAmount: Math.max(0, optNumber(inputs.fixedAmount)),
+    statAmount: Math.max(0, optNumber(inputs.statAmount)),
     neutralDamage: optNumber(inputs.neutralDamage),
     earthDamage: optNumber(inputs.earthDamage),
     fireDamage: optNumber(inputs.fireDamage),
@@ -283,23 +288,29 @@ function optUsefulStats(config) {
   return [...stats];
 }
 
-function optStatDelta(stat) {
+function optStatDelta(stat, amount) {
   return (draft) => {
-    draft[stat] += 1;
+    draft[stat] += amount;
   };
 }
 
 function optComparisonRows(config, baseline) {
-  const fixedGain = optTotalDamage(optWith(config, (draft) => { draft.flatDamage += 1; })) - baseline;
+  const fixedAmount = config.fixedAmount;
+  const statAmount = config.statAmount;
+  const fixedGain = optTotalDamage(optWith(config, (draft) => { draft.flatDamage += fixedAmount; })) - baseline;
   return optUsefulStats(config).map((stat) => {
-    const statGain = optTotalDamage(optWith(config, optStatDelta(stat))) - baseline;
+    const statGain = optTotalDamage(optWith(config, optStatDelta(stat, statAmount))) - baseline;
+    const statPerUnit = statAmount > 0 ? statGain / statAmount : 0;
     return {
       stat,
       statLabel: optStatLabels[stat],
+      fixedAmount,
+      statAmount,
       fixedGain,
       statGain,
       winner: fixedGain > statGain ? "fixed" : statGain > fixedGain ? "stat" : "tie",
-      equivalent: statGain > 0 ? fixedGain / statGain : null,
+      fixedEquivalentStat: statPerUnit > 0 ? fixedGain / statPerUnit : null,
+      statEquivalentFixed: fixedAmount > 0 && fixedGain > 0 ? statGain / (fixedGain / fixedAmount) : null,
     };
   });
 }
@@ -394,6 +405,38 @@ function optRenderResults() {
   optRenderEquivalences(results);
 }
 
+function optRenderSimpleResults() {
+  const config = optConfig();
+  const baseline = optTotalDamage(config);
+  const rows = optComparisonRows(config, baseline);
+  const bestRow = rows
+    .slice()
+    .sort((a, b) => Math.max(b.fixedGain, b.statGain) - Math.max(a.fixedGain, a.statGain))[0];
+
+  optEls.baseline.textContent = `Base analysee : ${optFormat(baseline)} degats moyens`;
+  if (!bestRow) {
+    optEls.verdict.textContent = "-";
+    optEls.verdictDetail.textContent = "Aucune ligne de degats exploitable pour ce sort.";
+    optRenderComparison(config, baseline);
+    return;
+  }
+
+  const fixedLabel = `+${optFormat(config.fixedAmount)} dommage${config.fixedAmount > 1 ? "s" : ""} fixe${config.fixedAmount > 1 ? "s" : ""}`;
+  const statLabel = `+${optFormat(config.statAmount)} ${bestRow.statLabel}`;
+  if (bestRow.winner === "fixed") {
+    optEls.verdict.textContent = fixedLabel;
+    optEls.verdictDetail.textContent = `${fixedLabel} apporte +${optFormat(bestRow.fixedGain)} degats, contre +${optFormat(bestRow.statGain)} avec ${statLabel}.`;
+  } else if (bestRow.winner === "stat") {
+    optEls.verdict.textContent = statLabel;
+    optEls.verdictDetail.textContent = `${statLabel} apporte +${optFormat(bestRow.statGain)} degats, contre +${optFormat(bestRow.fixedGain)} avec ${fixedLabel}.`;
+  } else {
+    optEls.verdict.textContent = "Egalite";
+    optEls.verdictDetail.textContent = `${fixedLabel} et ${statLabel} apportent chacun +${optFormat(bestRow.fixedGain)} degats.`;
+  }
+
+  optRenderComparison(config, baseline);
+}
+
 function optRenderComparison(config, baseline) {
   const rows = optComparisonRows(config, baseline);
   if (!rows.length) {
@@ -404,8 +447,8 @@ function optRenderComparison(config, baseline) {
   optEls.comparison.innerHTML = `
     <div class="opt-compare-head">
       <span>Stat utile</span>
-      <span>+1 dommage fixe</span>
-      <span>+1 statistique</span>
+      <span>+${optFormat(config.fixedAmount)} dommage${config.fixedAmount > 1 ? "s" : ""} fixe${config.fixedAmount > 1 ? "s" : ""}</span>
+      <span>+${optFormat(config.statAmount)} statistique</span>
       <span>Lecture</span>
     </div>
     ${rows.map((row) => `
@@ -419,10 +462,20 @@ function optRenderComparison(config, baseline) {
           <span>+${optFormat(row.statGain)}</span>
           <small>degats</small>
         </div>
-        <p>${optComparisonText(row)}</p>
+        <p>${optComparisonTextV2(row)}</p>
       </div>
     `).join("")}
   `;
+}
+
+function optComparisonTextV2(row) {
+  if (row.winner === "tie") return "Egalite parfaite sur ce sort.";
+  if (row.winner === "fixed") {
+    const equivalent = row.fixedEquivalentStat ? optFormat(row.fixedEquivalentStat) : "beaucoup de";
+    return `Les dommages fixes gagnent. ${optFormat(row.fixedAmount)} do vaut environ ${equivalent} ${row.statLabel.toLowerCase()}.`;
+  }
+  const equivalent = row.statEquivalentFixed ? optFormat(row.statEquivalentFixed) : "plusieurs";
+  return `La statistique gagne. ${optFormat(row.statAmount)} ${row.statLabel.toLowerCase()} vaut environ ${equivalent} do fixes.`;
 }
 
 function optComparisonText(row) {
@@ -568,7 +621,7 @@ function optRenderSelected() {
 function optRender() {
   optRenderSpellList();
   optRenderSelected();
-  optRenderResults();
+  optRenderSimpleResults();
   optRenderRotation();
   optRenderHitDetails();
   optEls.advancedPanel.hidden = !optState.advanced;
@@ -608,11 +661,20 @@ function optWire() {
     optState.rotation = [];
     optRender();
   });
+  optEls.fixedMinus.addEventListener("click", () => optStepInput(optEls.inputs.fixedAmount, -1));
+  optEls.fixedPlus.addEventListener("click", () => optStepInput(optEls.inputs.fixedAmount, 1));
+  optEls.statMinus.addEventListener("click", () => optStepInput(optEls.inputs.statAmount, -1));
+  optEls.statPlus.addEventListener("click", () => optStepInput(optEls.inputs.statAmount, 1));
   Object.values(optEls.inputs).forEach((input) => {
     if (!input) return;
     input.addEventListener("input", optRender);
     input.addEventListener("change", optRender);
   });
+}
+
+function optStepInput(input, delta) {
+  input.value = Math.max(0, optNumber(input) + delta);
+  optRender();
 }
 
 if (optSpells.length > 0) optWire();

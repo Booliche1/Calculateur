@@ -72,12 +72,23 @@
           <p class="spell-note" id="optSpellNote"></p>
 
           <section class="optimisation-panel">
-            <section class="opt-theory-panel">
-              <div>
-                <span>Hypothese</span>
-                <strong>Calcul theorique sur les jets de base</strong>
-                <p>La page compare des bonus d'optimisation comme si tu choisissais un over ou une rune de transcendance, sans tenir compte de ton stuff reel.</p>
-              </div>
+            <section class="opt-control-panel">
+              <label>
+                <span>Dommage fixe ajoute</span>
+                <div class="stepper-field">
+                  <button id="optFixedMinus" type="button">-</button>
+                  <input id="optFixedAmount" type="number" min="0" value="1" />
+                  <button id="optFixedPlus" type="button">+</button>
+                </div>
+              </label>
+              <label>
+                <span>Statistique ajoutee</span>
+                <div class="stepper-field">
+                  <button id="optStatMinus" type="button">-</button>
+                  <input id="optStatAmount" type="number" min="0" value="1" />
+                  <button id="optStatPlus" type="button">+</button>
+                </div>
+              </label>
               <label>
                 <span>Taux critique</span>
                 <input id="optCritChanceInput" type="number" min="0" max="100" value="0" />
@@ -105,21 +116,6 @@
                 <h3>Comparaison directe</h3>
                 <div id="optComparison" class="opt-comparison-table"></div>
               </section>
-
-              <div class="opt-grid">
-                <section class="opt-card">
-                  <h3>Details des bonus</h3>
-                  <div id="optResults" class="opt-result-list"></div>
-                </section>
-                <section class="opt-card">
-                  <h3>Seuil de decision</h3>
-                  <div id="optThresholds" class="opt-equivalence-list"></div>
-                </section>
-                <section class="opt-card">
-                  <h3>Lecture des equivalences</h3>
-                  <div id="optEquivalences" class="opt-equivalence-list"></div>
-                </section>
-              </div>
             </section>
 
             <section id="optAdvancedPanel" class="opt-advanced-panel" hidden>
