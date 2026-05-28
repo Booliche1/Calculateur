@@ -923,6 +923,13 @@ select:focus {
   font-size: 1.08rem;
 }
 
+.opt-result-row strong::after {
+  content: " / unite";
+  color: rgb(246 248 243 / 72%);
+  font-size: 0.72rem;
+  font-weight: 760;
+}
+
 .opt-result-row small {
   color: rgb(246 248 243 / 78%);
   font-weight: 760;

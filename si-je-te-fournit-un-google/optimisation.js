@@ -311,22 +311,44 @@ function optRenderResults() {
   const { baseline, results } = optBonusResults();
   const best = results[0];
   const bestGain = Math.max(0, best?.gain || 0);
+  const fixed = results.find((result) => result.type === "flat");
+  const bestPerUnit = results
+    .map((result) => ({ ...result, perUnitGain: result.gain / result.unit }))
+    .sort((a, b) => b.perUnitGain - a.perUnitGain)[0];
 
   optEls.baseline.textContent = `Base analysee : ${optFormat(baseline)} degats moyens`;
-  optEls.verdict.textContent = best ? best.label : "-";
-  optEls.verdictDetail.textContent = best
-    ? `${best.label} est le meilleur choix theorique pour ce sort ou cette rotation : il ajoute +${optFormat(best.gain)} degats moyens par rapport au jet de base.`
+  optEls.verdict.textContent = bestPerUnit ? bestPerUnit.label : "-";
+  optEls.verdictDetail.textContent = bestPerUnit
+    ? `${bestPerUnit.label} donne le meilleur gain par unite. ${fixed ? `1 dommage fixe vaut ici environ ${optFormat(optEquivalentStatForFixed(results))} stat dans le meilleur element utile.` : ""}`
     : "Aucun sort analysable.";
 
-  optEls.results.innerHTML = results.map((result) => `
-    <div class="opt-result-row ${optRankClass(result.gain, bestGain)}">
+  optEls.results.innerHTML = results.map((result) => {
+    const perUnitGain = result.gain / result.unit;
+    const equivalent = fixed && result.type === "stat" && perUnitGain > 0
+      ? `1 do fixe ≈ ${optFormat(fixed.gain / perUnitGain)} ${result.shortLabel.toLowerCase()}`
+      : result.type === "flat"
+        ? "reference directe"
+        : `+${optFormat(perUnitGain)} degat par unite`;
+    return `
+    <div class="opt-result-row ${optRankClass(perUnitGain, bestPerUnit?.perUnitGain || bestGain)}">
       <span>${result.label}</span>
-      <strong>+${optFormat(result.gain)}</strong>
-      <small>${result.unit > 1 ? `gain total pour ${result.unit}` : "gain pour 1"}</small>
+      <strong>+${optFormat(perUnitGain)}</strong>
+      <small>${equivalent}</small>
     </div>
-  `).join("");
+  `;
+  }).join("");
 
   optRenderEquivalences(results);
+}
+
+function optEquivalentStatForFixed(results) {
+  const fixed = results.find((item) => item.type === "flat");
+  const bestStat = results
+    .filter((item) => item.type === "stat")
+    .map((item) => ({ ...item, perUnitGain: item.gain / item.unit }))
+    .sort((a, b) => b.perUnitGain - a.perUnitGain)[0];
+  if (!fixed || !bestStat?.perUnitGain) return 0;
+  return fixed.gain / bestStat.perUnitGain;
 }
 
 function optRenderEquivalences(results) {
