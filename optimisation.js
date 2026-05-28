@@ -16,7 +16,9 @@ const optEls = {
   addRotation: document.querySelector("#optAddRotation"),
   clearRotation: document.querySelector("#optClearRotation"),
   rotationList: document.querySelector("#optRotationList"),
+  comparison: document.querySelector("#optComparison"),
   results: document.querySelector("#optResults"),
+  thresholds: document.querySelector("#optThresholds"),
   equivalences: document.querySelector("#optEquivalences"),
   hitDetails: document.querySelector("#optHitDetails"),
   verdict: document.querySelector("#optVerdict"),
@@ -254,6 +256,54 @@ function optBonusResults() {
   };
 }
 
+const optStatLabels = {
+  force: "Force",
+  intelligence: "Intelligence",
+  chance: "Chance",
+  agility: "Agilite",
+};
+
+const optElementToStat = {
+  neutre: "force",
+  terre: "force",
+  feu: "intelligence",
+  eau: "chance",
+  air: "agility",
+};
+
+function optUsefulStats(config) {
+  const crit = optEls.damageMode.value === "crit";
+  const stats = new Set();
+  optTargetSpells().forEach((spell) => {
+    optHits(spell, config, crit).forEach((hit) => {
+      const stat = optElementToStat[hit.element];
+      if (stat) stats.add(stat);
+    });
+  });
+  return [...stats];
+}
+
+function optStatDelta(stat) {
+  return (draft) => {
+    draft[stat] += 1;
+  };
+}
+
+function optComparisonRows(config, baseline) {
+  const fixedGain = optTotalDamage(optWith(config, (draft) => { draft.flatDamage += 1; })) - baseline;
+  return optUsefulStats(config).map((stat) => {
+    const statGain = optTotalDamage(optWith(config, optStatDelta(stat))) - baseline;
+    return {
+      stat,
+      statLabel: optStatLabels[stat],
+      fixedGain,
+      statGain,
+      winner: fixedGain > statGain ? "fixed" : statGain > fixedGain ? "stat" : "tie",
+      equivalent: statGain > 0 ? fixedGain / statGain : null,
+    };
+  });
+}
+
 function optFilteredSpells() {
   const query = optNormalize(optEls.search.value);
   const className = optEls.classFilter.value;
@@ -322,6 +372,8 @@ function optRenderResults() {
     ? `${bestPerUnit.label} donne le meilleur gain par unite. ${fixed ? `1 dommage fixe vaut ici environ ${optFormat(optEquivalentStatForFixed(results))} stat dans le meilleur element utile.` : ""}`
     : "Aucun sort analysable.";
 
+  optRenderComparison(optConfig(), baseline);
+
   optEls.results.innerHTML = results.map((result) => {
     const perUnitGain = result.gain / result.unit;
     const equivalent = fixed && result.type === "stat" && perUnitGain > 0
@@ -338,7 +390,48 @@ function optRenderResults() {
   `;
   }).join("");
 
+  optRenderThresholds(results);
   optRenderEquivalences(results);
+}
+
+function optRenderComparison(config, baseline) {
+  const rows = optComparisonRows(config, baseline);
+  if (!rows.length) {
+    optEls.comparison.innerHTML = `<p class="empty-state">Aucune ligne de degats exploitable pour comparer.</p>`;
+    return;
+  }
+
+  optEls.comparison.innerHTML = `
+    <div class="opt-compare-head">
+      <span>Stat utile</span>
+      <span>+1 dommage fixe</span>
+      <span>+1 statistique</span>
+      <span>Lecture</span>
+    </div>
+    ${rows.map((row) => `
+      <div class="opt-compare-row">
+        <strong>${row.statLabel}</strong>
+        <div class="opt-compare-cell ${row.winner === "fixed" ? "winner" : row.winner === "tie" ? "tie" : ""}">
+          <span>+${optFormat(row.fixedGain)}</span>
+          <small>degats</small>
+        </div>
+        <div class="opt-compare-cell ${row.winner === "stat" ? "winner" : row.winner === "tie" ? "tie" : ""}">
+          <span>+${optFormat(row.statGain)}</span>
+          <small>degats</small>
+        </div>
+        <p>${optComparisonText(row)}</p>
+      </div>
+    `).join("")}
+  `;
+}
+
+function optComparisonText(row) {
+  if (row.winner === "tie") return "Egalite parfaite sur ce sort.";
+  if (row.winner === "fixed") {
+    const equivalent = row.equivalent ? optFormat(row.equivalent) : "beaucoup de";
+    return `Le dommage fixe est meilleur. 1 do ≈ ${equivalent} ${row.statLabel.toLowerCase()}.`;
+  }
+  return `La statistique est meilleure sur ce sort. 1 ${row.statLabel.toLowerCase()} depasse 1 dommage fixe.`;
 }
 
 function optEquivalentStatForFixed(results) {
@@ -386,6 +479,46 @@ function optRenderEquivalences(results) {
   lines.push("Les dommages fixes ne baissent pas avec tes stats : ils sont surtout meilleurs sur les petits jets et les sorts multi-lignes.");
 
   optEls.equivalences.innerHTML = lines.map((line) => `<p>${line}</p>`).join("");
+}
+
+function optRenderThresholds(results) {
+  const fixed = results.find((item) => item.type === "flat");
+  const statRows = results
+    .filter((item) => item.type === "stat")
+    .map((item) => ({ ...item, perUnitGain: item.gain / item.unit }))
+    .filter((item) => item.perUnitGain > 0)
+    .sort((a, b) => b.perUnitGain - a.perUnitGain);
+  const bestStat = statRows[0];
+  const lines = [];
+
+  if (!fixed || !bestStat) {
+    optEls.thresholds.innerHTML = `<p>Pas assez de degats sur ce sort pour calculer un seuil utile.</p>`;
+    return;
+  }
+
+  const statPerFixed = fixed.gain / bestStat.perUnitGain;
+  lines.push(`1 dommage fixe devient meilleur qu'environ ${optFormat(statPerFixed)} ${bestStat.shortLabel.toLowerCase()}.`);
+
+  [5, 10, 15, 20, 25, 30, 50, 100].forEach((statAmount) => {
+    const neededFixed = (statAmount * bestStat.perUnitGain) / fixed.gain;
+    const rounded = Math.ceil(neededFixed * 10) / 10;
+    lines.push(`${statAmount} ${bestStat.shortLabel.toLowerCase()} valent environ ${optFormat(neededFixed)} dommage fixe : il faut au moins ${optFormat(rounded)} do pour faire mieux.`);
+  });
+
+  const multiLineCount = optAverageLineCount();
+  if (multiLineCount > 1) {
+    lines.push(`Ce sort a environ ${optFormat(multiLineCount)} lignes : les dommages fixes sont naturellement favorises.`);
+  }
+
+  optEls.thresholds.innerHTML = lines.map((line) => `<p>${line}</p>`).join("");
+}
+
+function optAverageLineCount() {
+  const config = optConfig();
+  const crit = optEls.damageMode.value === "crit";
+  const spells = optTargetSpells();
+  if (!spells.length) return 0;
+  return spells.reduce((total, spell) => total + optHits(spell, config, crit).length, 0) / spells.length;
 }
 
 function optAverageLineBase() {

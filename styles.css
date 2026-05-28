@@ -862,8 +862,12 @@ select:focus {
 .opt-grid,
 .opt-advanced-panel {
   display: grid;
-  grid-template-columns: minmax(360px, 1fr) minmax(300px, 0.82fr);
+  grid-template-columns: minmax(340px, 1fr) minmax(300px, 0.92fr);
   gap: 14px;
+}
+
+.opt-grid .opt-card:first-child {
+  grid-row: span 2;
 }
 
 .opt-card {
@@ -898,6 +902,87 @@ select:focus {
 .hit-detail-list {
   display: grid;
   gap: 8px;
+}
+
+.opt-comparison-table {
+  display: grid;
+  gap: 8px;
+}
+
+.opt-compare-head,
+.opt-compare-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.8fr) minmax(150px, 1fr) minmax(150px, 1fr) minmax(220px, 1.4fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.opt-compare-head {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.opt-compare-row {
+  padding: 8px;
+  background: #101721;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.opt-compare-row > strong,
+.opt-compare-row > p,
+.opt-compare-cell {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 52px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 7px;
+}
+
+.opt-compare-row > strong,
+.opt-compare-row > p {
+  color: #dce7f2;
+  background: rgb(255 255 255 / 5%);
+  font-size: 0.86rem;
+  font-weight: 820;
+}
+
+.opt-compare-row > p {
+  line-height: 1.32;
+}
+
+.opt-compare-cell {
+  justify-content: space-between;
+  gap: 8px;
+  color: #dce7f2;
+  background: rgb(33 83 118 / 42%);
+  border: 1px solid rgb(96 176 239 / 26%);
+}
+
+.opt-compare-cell span {
+  color: #ffffff;
+  font-size: 1.22rem;
+  font-weight: 950;
+}
+
+.opt-compare-cell small {
+  color: rgb(246 248 243 / 74%);
+  font-weight: 800;
+}
+
+.opt-compare-cell.winner {
+  background: linear-gradient(135deg, rgb(55 136 73 / 88%), rgb(38 96 58 / 86%));
+  border-color: rgb(151 234 147 / 62%);
+  box-shadow: 0 0 0 1px rgb(151 234 147 / 20%), 0 10px 24px rgb(58 160 84 / 14%);
+}
+
+.opt-compare-cell.tie {
+  background: linear-gradient(135deg, rgb(131 112 41 / 88%), rgb(82 73 36 / 86%));
+  border-color: rgb(248 217 102 / 58%);
 }
 
 .opt-result-row {
@@ -1322,7 +1407,9 @@ select:focus {
   .opt-grid,
   .opt-advanced-panel,
   .opt-theory-panel,
-  .opt-result-row {
+  .opt-result-row,
+  .opt-compare-head,
+  .opt-compare-row {
     grid-template-columns: 1fr;
   }
 
