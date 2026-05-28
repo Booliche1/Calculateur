@@ -28,6 +28,7 @@ const optEls = {
   inputs: {
     fixedAmount: document.querySelector("#optFixedAmount"),
     statAmount: document.querySelector("#optStatAmount"),
+    lineScope: document.querySelector("#optLineScopeInput"),
     critChance: document.querySelector("#optCritChanceInput"),
     rangeType: document.querySelector("#optRangeTypeInput"),
   },
@@ -70,6 +71,7 @@ function optConfig() {
     meleeDamage: optNumber(inputs.meleeDamage),
     fixedAmount: Math.max(0, optNumber(inputs.fixedAmount)),
     statAmount: Math.max(0, optNumber(inputs.statAmount)),
+    lineScope: inputs.lineScope?.value || "all",
     neutralDamage: optNumber(inputs.neutralDamage),
     earthDamage: optNumber(inputs.earthDamage),
     fireDamage: optNumber(inputs.fireDamage),
@@ -195,8 +197,16 @@ function optHits(spell, config, crit) {
   }];
 }
 
+function optFilteredHits(spell, config, crit) {
+  const hits = optHits(spell, config, crit);
+  if (config.lineScope === "all" || optEls.scope.value === "rotation") return hits;
+  const index = Number.parseInt(config.lineScope, 10);
+  if (!Number.isInteger(index) || !hits[index]) return hits;
+  return [hits[index]];
+}
+
 function optSpellDamage(spell, config, crit) {
-  return optHits(spell, config, crit).reduce((total, hit) => {
+  return optFilteredHits(spell, config, crit).reduce((total, hit) => {
     const minDamage = optDamageLine(hit.min, hit.element, config, crit);
     const maxDamage = optDamageLine(hit.max, hit.element, config, crit);
     return total + (minDamage + maxDamage) / 2;
@@ -280,7 +290,7 @@ function optUsefulElements(config) {
   const crit = optEls.damageMode.value === "crit";
   const elements = new Map();
   optTargetSpells().forEach((spell) => {
-    optHits(spell, config, crit).forEach((hit) => {
+    optFilteredHits(spell, config, crit).forEach((hit) => {
       const stat = optElementToStat[hit.element];
       if (stat && !elements.has(hit.element)) elements.set(hit.element, stat);
     });
@@ -352,10 +362,31 @@ function optRenderSpellList() {
     `;
     button.addEventListener("click", () => {
       optState.selected = spell;
+      optEls.inputs.lineScope.value = "all";
       optRender();
     });
     optEls.spellList.append(button);
   });
+}
+
+function optRenderLineOptions() {
+  const input = optEls.inputs.lineScope;
+  const current = input.value || "all";
+  const config = { ...optConfig(), lineScope: "all" };
+  const spell = optState.selected;
+  const disabled = optEls.scope.value === "rotation";
+  const hits = spell ? optHits(spell, config, optEls.damageMode.value === "crit") : [];
+
+  input.innerHTML = `<option value="all">Toutes les lignes</option>`;
+  hits.forEach((hit, index) => {
+    const option = document.createElement("option");
+    option.value = `${index}`;
+    option.textContent = `Ligne ${index + 1} - ${hit.element} ${hit.min}-${hit.max}`;
+    input.append(option);
+  });
+
+  input.disabled = disabled || hits.length <= 1;
+  input.value = [...input.options].some((option) => option.value === current) ? current : "all";
 }
 
 function optRankClass(gain, bestGain) {
@@ -413,8 +444,9 @@ function optRenderSimpleResults() {
   const bestRow = rows
     .slice()
     .sort((a, b) => Math.max(b.fixedGain, b.statGain) - Math.max(a.fixedGain, a.statGain))[0];
+  const scopeText = optLineScopeText(config);
 
-  optEls.baseline.textContent = `Base analysee : ${optFormat(baseline)} degats moyens`;
+  optEls.baseline.textContent = `Base analysee : ${optFormat(baseline)} degats moyens${scopeText ? ` - ${scopeText}` : ""}`;
   optApplyVerdictElement(null);
   if (!bestRow) {
     optEls.verdict.textContent = "-";
@@ -444,6 +476,14 @@ function optElementClass(element) {
   return optNormalize(element || "neutre");
 }
 
+function optLineScopeText(config) {
+  if (config.lineScope === "all" || optEls.scope.value === "rotation" || !optState.selected) return "";
+  const index = Number.parseInt(config.lineScope, 10);
+  if (!Number.isInteger(index)) return "";
+  const hit = optHits(optState.selected, { ...config, lineScope: "all" }, optEls.damageMode.value === "crit")[index];
+  return hit ? `ligne ${index + 1} ${hit.element}` : "";
+}
+
 function optApplyVerdictElement(element) {
   ["terre", "feu", "air", "eau", "neutre", "multi"].forEach((name) => {
     optEls.verdict.classList.remove(`result-${name}`);
@@ -467,7 +507,7 @@ function optRenderComparison(config, baseline) {
     </div>
     ${rows.map((row) => `
       <div class="opt-compare-row">
-        <strong>${row.statLabel}</strong>
+        <strong>${row.statLabel}<small>${row.element}</small></strong>
         <div class="opt-compare-cell element-${optElementClass(row.element)} ${row.winner === "fixed" ? "winner" : row.winner === "tie" ? "tie" : ""}">
           <span>+${optFormat(row.fixedGain)}</span>
           <small>degats</small>
@@ -486,10 +526,10 @@ function optComparisonTextV2(row) {
   if (row.winner === "tie") return "Egalite parfaite sur ce sort.";
   if (row.winner === "fixed") {
     const equivalent = row.fixedEquivalentStat ? optFormat(row.fixedEquivalentStat) : "beaucoup de";
-    return `Les dommages fixes gagnent. ${optFormat(row.fixedAmount)} do vaut environ ${equivalent} ${row.statLabel.toLowerCase()}.`;
+    return `Les dommages fixes gagnent sur la ligne ${row.element}. ${optFormat(row.fixedAmount)} do vaut environ ${equivalent} ${row.statLabel.toLowerCase()}.`;
   }
   const equivalent = row.statEquivalentFixed ? optFormat(row.statEquivalentFixed) : "plusieurs";
-  return `La statistique gagne. ${optFormat(row.statAmount)} ${row.statLabel.toLowerCase()} vaut environ ${equivalent} do fixes.`;
+  return `La statistique gagne sur la ligne ${row.element}. ${optFormat(row.statAmount)} ${row.statLabel.toLowerCase()} vaut environ ${equivalent} do fixes.`;
 }
 
 function optComparisonText(row) {
@@ -619,7 +659,7 @@ function optRenderHitDetails() {
   const config = optConfig();
   const crit = optEls.damageMode.value === "crit";
   optEls.hitDetails.innerHTML = optTargetSpells().map((spell) => {
-    const rows = optHits(spell, config, crit).map((hit) => `<li>${hit.min}-${hit.max} ${hit.element}</li>`).join("");
+    const rows = optFilteredHits(spell, config, crit).map((hit) => `<li>${hit.min}-${hit.max} ${hit.element}</li>`).join("");
     return `<article><strong>${spell.nom}</strong><ul>${rows}</ul></article>`;
   }).join("");
 }
@@ -635,6 +675,7 @@ function optRenderSelected() {
 function optRender() {
   optRenderSpellList();
   optRenderSelected();
+  optRenderLineOptions();
   optRenderSimpleResults();
   optRenderRotation();
   optRenderHitDetails();

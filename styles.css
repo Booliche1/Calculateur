@@ -810,7 +810,7 @@ select:focus {
 .opt-theory-panel,
 .opt-control-panel {
   display: grid;
-  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
   padding: 14px;
   background: rgb(18 24 33 / 86%);
@@ -990,6 +990,20 @@ select:focus {
   background: rgb(255 255 255 / 5%);
   font-size: 0.86rem;
   font-weight: 820;
+}
+
+.opt-compare-row > strong {
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.opt-compare-row > strong small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
 }
 
 .opt-compare-row > p {
