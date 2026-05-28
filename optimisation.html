@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dofus - Optimisation</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Dofus Damage Lab</p>
+          <h1>Optimisation</h1>
+        </div>
+        <nav class="page-tabs" aria-label="Navigation">
+          <a href="index.html">Relances</a>
+          <a href="calculateur.html">Calculateur</a>
+          <a href="combat.html">Combat</a>
+          <a class="active" href="optimisation.html">Optimisation</a>
+        </nav>
+      </header>
+
+      <section class="filters">
+        <label class="search-field">
+          <span>Rechercher un sort</span>
+          <input id="optSearchInput" type="search" placeholder="Nom du sort" autocomplete="off" />
+        </label>
+        <label>
+          <span>Classe</span>
+          <select id="optClassFilter">
+            <option value="all">Toutes</option>
+          </select>
+        </label>
+        <label>
+          <span>Analyse</span>
+          <select id="optScopeInput">
+            <option value="spell">Sort selectionne</option>
+            <option value="rotation">Rotation</option>
+          </select>
+        </label>
+        <label>
+          <span>Mode</span>
+          <select id="optDamageMode">
+            <option value="weighted">Moyenne critique</option>
+            <option value="normal">Normal</option>
+            <option value="crit">Critique</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="calculator-layout optimisation-layout">
+        <aside class="sidebar compact-sidebar" aria-label="Liste des sorts">
+          <div class="list-heading">
+            <h2>Sorts</h2>
+            <span id="optSpellCount"></span>
+          </div>
+          <div class="spell-list" id="optSpellList"></div>
+        </aside>
+
+        <section class="workspace calculator-workspace" aria-live="polite">
+          <div class="spell-header">
+            <div>
+              <p id="optSelectedClass" class="eyebrow">Classe</p>
+              <h2 id="optSelectedName"></h2>
+            </div>
+            <div class="toggle">
+              <button id="optSimpleMode" type="button" class="active">Simple</button>
+              <button id="optAdvancedMode" type="button">Avance</button>
+            </div>
+          </div>
+          <p class="spell-note" id="optSpellNote"></p>
+
+          <section class="optimisation-panel">
+            <div class="calculator-sections">
+              <section class="calc-box">
+                <h4>Personnage</h4>
+                <div class="calc-table">
+                  <label><input id="optForceInput" type="number" value="0" /><span>Force</span></label>
+                  <label><input id="optPowerInput" type="number" value="0" /><span>Puissance</span></label>
+                  <label><input id="optIntelligenceInput" type="number" value="0" /><span>Intelligence</span></label>
+                  <label><input id="optFlatDamageInput" type="number" value="0" /><span>Dommages</span></label>
+                  <label><input id="optChanceInput" type="number" value="0" /><span>Chance</span></label>
+                  <label><input id="optCritDamageInput" type="number" value="0" /><span>Dommages critiques</span></label>
+                  <label><input id="optAgilityInput" type="number" value="0" /><span>Agilite</span></label>
+                  <label><input id="optCritChanceInput" type="number" min="0" max="100" value="0" /><span>% Critique</span></label>
+                  <label><input id="optEarthDamageInput" type="number" value="0" /><span>Dommages terre</span></label>
+                  <label><input id="optSpellDamageInput" type="number" value="0" /><span>% Dommages sorts</span></label>
+                  <label><input id="optFireDamageInput" type="number" value="0" /><span>Dommages feu</span></label>
+                  <label><input id="optFinalDamageInput" type="number" value="0" /><span>% Dommages finaux</span></label>
+                  <label><input id="optWaterDamageInput" type="number" value="0" /><span>Dommages eau</span></label>
+                  <label>
+                    <select id="optRangeTypeInput">
+                      <option value="distance">Distance</option>
+                      <option value="melee">Melee</option>
+                    </select>
+                    <span>Distance du coup</span>
+                  </label>
+                  <label><input id="optAirDamageInput" type="number" value="0" /><span>Dommages air</span></label>
+                  <label><input id="optDistanceDamageInput" type="number" value="0" /><span>% Dommages distance</span></label>
+                  <label><input id="optNeutralDamageInput" type="number" value="0" /><span>Dommages neutre</span></label>
+                  <label><input id="optMeleeDamageInput" type="number" value="0" /><span>% Dommages melee</span></label>
+                </div>
+              </section>
+
+              <section class="calc-box">
+                <h4>Cible</h4>
+                <div class="calc-table">
+                  <label><input id="optNeutralFlatResInput" type="number" value="0" /><span>Resistances fixes neutre</span></label>
+                  <label><input id="optNeutralPercentResInput" type="number" value="0" /><span>% Resistances neutre</span></label>
+                  <label><input id="optEarthFlatResInput" type="number" value="0" /><span>Resistances fixes terre</span></label>
+                  <label><input id="optEarthPercentResInput" type="number" value="0" /><span>% Resistances terre</span></label>
+                  <label><input id="optFireFlatResInput" type="number" value="0" /><span>Resistances fixes feu</span></label>
+                  <label><input id="optFirePercentResInput" type="number" value="0" /><span>% Resistances feu</span></label>
+                  <label><input id="optWaterFlatResInput" type="number" value="0" /><span>Resistances fixes eau</span></label>
+                  <label><input id="optWaterPercentResInput" type="number" value="0" /><span>% Resistances eau</span></label>
+                  <label><input id="optAirFlatResInput" type="number" value="0" /><span>Resistances fixes air</span></label>
+                  <label><input id="optAirPercentResInput" type="number" value="0" /><span>% Resistances air</span></label>
+                  <label><input id="optCritResInput" type="number" value="0" /><span>Resistances critiques</span></label>
+                  <label><input id="optSufferedDamageInput" type="number" value="100" /><span>% Dommages subis</span></label>
+                  <label><input id="optSpellResInput" type="number" value="0" /><span>Res fixes sorts</span></label>
+                  <label><input id="optDistanceResInput" type="number" value="0" /><span>% Resistances distance</span></label>
+                  <label><input id="optWeaponResInput" type="number" value="0" /><span>Res fixes armes</span></label>
+                  <label><input id="optMeleeResInput" type="number" value="0" /><span>% Resistances melee</span></label>
+                </div>
+              </section>
+            </div>
+
+            <section class="optimisation-results">
+              <article class="result-strip optimisation-verdict">
+                <div>
+                  <span>Verdict</span>
+                  <strong id="optVerdict">-</strong>
+                  <small id="optBaseline"></small>
+                </div>
+                <p id="optVerdictDetail"></p>
+              </article>
+
+              <div class="opt-grid">
+                <section class="opt-card">
+                  <h3>Rentabilite des bonus</h3>
+                  <div id="optResults" class="opt-result-list"></div>
+                </section>
+                <section class="opt-card">
+                  <h3>Equivalences</h3>
+                  <div id="optEquivalences" class="opt-equivalence-list"></div>
+                </section>
+              </div>
+            </section>
+
+            <section id="optAdvancedPanel" class="opt-advanced-panel" hidden>
+              <div class="opt-card">
+                <div class="opt-card-header">
+                  <h3>Rotation</h3>
+                  <button id="optAddRotation" type="button" class="primary-button">Ajouter le sort</button>
+                  <button id="optClearRotation" type="button" class="ghost-button">Vider</button>
+                </div>
+                <div id="optRotationList" class="rotation-list"></div>
+              </div>
+              <div class="opt-card">
+                <h3>Details des lignes analysees</h3>
+                <div id="optHitDetails" class="hit-detail-list"></div>
+              </div>
+            </section>
+          </section>
+        </section>
+      </section>
+
+      <footer class="data-credit">
+        Donnees issues de DofusDB. Utilisation soumise a la LPNC-IA 1.0.
+      </footer>
+    </main>
+    <script src="app.js"></script>
+    <script src="optimisation.js"></script>
+  </body>
+</html>
