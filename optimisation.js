@@ -23,40 +23,8 @@ const optEls = {
   verdictDetail: document.querySelector("#optVerdictDetail"),
   baseline: document.querySelector("#optBaseline"),
   inputs: {
-    force: document.querySelector("#optForceInput"),
-    intelligence: document.querySelector("#optIntelligenceInput"),
-    chance: document.querySelector("#optChanceInput"),
-    agility: document.querySelector("#optAgilityInput"),
-    power: document.querySelector("#optPowerInput"),
-    flatDamage: document.querySelector("#optFlatDamageInput"),
-    critDamage: document.querySelector("#optCritDamageInput"),
     critChance: document.querySelector("#optCritChanceInput"),
-    spellDamage: document.querySelector("#optSpellDamageInput"),
-    finalDamage: document.querySelector("#optFinalDamageInput"),
-    distanceDamage: document.querySelector("#optDistanceDamageInput"),
-    meleeDamage: document.querySelector("#optMeleeDamageInput"),
-    neutralDamage: document.querySelector("#optNeutralDamageInput"),
-    earthDamage: document.querySelector("#optEarthDamageInput"),
-    fireDamage: document.querySelector("#optFireDamageInput"),
-    waterDamage: document.querySelector("#optWaterDamageInput"),
-    airDamage: document.querySelector("#optAirDamageInput"),
     rangeType: document.querySelector("#optRangeTypeInput"),
-    neutralFlatRes: document.querySelector("#optNeutralFlatResInput"),
-    earthFlatRes: document.querySelector("#optEarthFlatResInput"),
-    fireFlatRes: document.querySelector("#optFireFlatResInput"),
-    waterFlatRes: document.querySelector("#optWaterFlatResInput"),
-    airFlatRes: document.querySelector("#optAirFlatResInput"),
-    neutralPercentRes: document.querySelector("#optNeutralPercentResInput"),
-    earthPercentRes: document.querySelector("#optEarthPercentResInput"),
-    firePercentRes: document.querySelector("#optFirePercentResInput"),
-    waterPercentRes: document.querySelector("#optWaterPercentResInput"),
-    airPercentRes: document.querySelector("#optAirPercentResInput"),
-    critRes: document.querySelector("#optCritResInput"),
-    spellRes: document.querySelector("#optSpellResInput"),
-    weaponRes: document.querySelector("#optWeaponResInput"),
-    sufferedDamage: document.querySelector("#optSufferedDamageInput"),
-    distanceRes: document.querySelector("#optDistanceResInput"),
-    meleeRes: document.querySelector("#optMeleeResInput"),
   },
 };
 
@@ -100,7 +68,7 @@ function optConfig() {
     fireDamage: optNumber(inputs.fireDamage),
     waterDamage: optNumber(inputs.waterDamage),
     airDamage: optNumber(inputs.airDamage),
-    rangeType: inputs.rangeType.value,
+    rangeType: inputs.rangeType?.value || "distance",
     neutralFlatRes: optNumber(inputs.neutralFlatRes),
     earthFlatRes: optNumber(inputs.earthFlatRes),
     fireFlatRes: optNumber(inputs.fireFlatRes),
@@ -114,7 +82,7 @@ function optConfig() {
     critRes: optNumber(inputs.critRes),
     spellRes: optNumber(inputs.spellRes),
     weaponRes: optNumber(inputs.weaponRes),
-    sufferedDamage: optNumber(inputs.sufferedDamage),
+    sufferedDamage: inputs.sufferedDamage ? optNumber(inputs.sufferedDamage) : 100,
     distanceRes: optNumber(inputs.distanceRes),
     meleeRes: optNumber(inputs.meleeRes),
   };
@@ -347,14 +315,14 @@ function optRenderResults() {
   optEls.baseline.textContent = `Base analysee : ${optFormat(baseline)} degats moyens`;
   optEls.verdict.textContent = best ? best.label : "-";
   optEls.verdictDetail.textContent = best
-    ? `${best.label} est actuellement le bonus le plus rentable sur cette analyse, avec +${optFormat(best.gain)} degats moyens.`
+    ? `${best.label} est le meilleur choix theorique pour ce sort ou cette rotation : il ajoute +${optFormat(best.gain)} degats moyens par rapport au jet de base.`
     : "Aucun sort analysable.";
 
   optEls.results.innerHTML = results.map((result) => `
     <div class="opt-result-row ${optRankClass(result.gain, bestGain)}">
       <span>${result.label}</span>
       <strong>+${optFormat(result.gain)}</strong>
-      <small>${result.unit > 1 ? `soit +${optFormat(result.gain / result.unit)} par unite` : "par unite"}</small>
+      <small>${result.unit > 1 ? `gain total pour ${result.unit}` : "gain pour 1"}</small>
     </div>
   `).join("");
 
@@ -486,6 +454,7 @@ function optWire() {
     optRender();
   });
   Object.values(optEls.inputs).forEach((input) => {
+    if (!input) return;
     input.addEventListener("input", optRender);
     input.addEventListener("change", optRender);
   });
