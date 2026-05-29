@@ -111,6 +111,15 @@
                     </select>
                   </label>
                 </div>
+                <details class="stat-import-panel">
+                  <summary>Importer des stats</summary>
+                  <textarea id="statImportText" rows="7" placeholder="Colle ici des lignes comme :&#10;Force 1300&#10;Intelligence 390&#10;80 Critique&#10;123 Do Critique&#10;34 Do Neutre"></textarea>
+                  <div class="stat-import-actions">
+                    <button id="applyStatImport" type="button" class="primary-button">Appliquer</button>
+                    <button id="clearStatImport" type="button" class="ghost-button">Vider</button>
+                    <span id="statImportStatus"></span>
+                  </div>
+                </details>
                 <div class="calc-table">
                   <label><input id="levelInput" type="number" min="1" max="200" value="200" /><span>Niveau</span></label>
                   <label><input id="pushDamageInput" type="number" value="0" /><span>Dommages poussee</span></label>

@@ -897,6 +897,10 @@ const elements = {
   nebuleuxInput: document.querySelector("#nebuleuxInput"),
   pourpreInput: document.querySelector("#pourpreInput"),
   turquoiseInput: document.querySelector("#turquoiseInput"),
+  statImportText: document.querySelector("#statImportText"),
+  applyStatImport: document.querySelector("#applyStatImport"),
+  clearStatImport: document.querySelector("#clearStatImport"),
+  statImportStatus: document.querySelector("#statImportStatus"),
   levelInput: document.querySelector("#levelInput"),
   forceInput: document.querySelector("#forceInput"),
   intelligenceInput: document.querySelector("#intelligenceInput"),
@@ -1000,6 +1004,95 @@ function applyFinalBonusDisplay() {
 
   adjustInputValue(elements.finalDamageInput, delta);
   state.quickFinalBonus = nextBonus;
+}
+
+const statImportFields = [
+  { input: "forceInput", aliases: ["force"] },
+  { input: "intelligenceInput", aliases: ["intelligence", "intel"] },
+  { input: "chanceInput", aliases: ["chance"] },
+  { input: "agilityInput", aliases: ["agilite", "agi"] },
+  { input: "powerInput", aliases: ["puissance"] },
+  { input: "neutralDamageInput", aliases: ["dommages neutre", "dommage neutre", "do neutre"] },
+  { input: "earthDamageInput", aliases: ["dommages terre", "dommage terre", "do terre"] },
+  { input: "fireDamageInput", aliases: ["dommages feu", "dommage feu", "do feu"] },
+  { input: "waterDamageInput", aliases: ["dommages eau", "dommage eau", "do eau"] },
+  { input: "airDamageInput", aliases: ["dommages air", "dommage air", "do air"] },
+  { input: "critDamageInput", aliases: ["dommages critiques", "dommage critique", "dommages critique", "do critique", "do crit", "do cri"] },
+  { input: "finalDamageInput", aliases: ["% dommages finaux", "% dommage final", "% do finaux", "% do final"] },
+  { input: "spellDamageInput", aliases: ["% dommages sorts", "% dommage sort", "% do sorts", "% do sort"] },
+  { input: "weaponDamageInput", aliases: ["% dommages armes", "% dommage arme", "% do armes", "% do arme"] },
+  { input: "distanceDamageInput", aliases: ["% dommages distance", "% dommage distance", "% do distance", "% do dist"] },
+  { input: "meleeDamageInput", aliases: ["% dommages melee", "% dommage melee", "% do melee", "% do mele"] },
+  { input: "pushDamageInput", aliases: ["dommages poussee", "dommage poussee", "do poussee", "do pou"] },
+  { input: "flatDamageInput", aliases: ["dommages", "dommage", "do"] },
+  { input: "critChanceInput", aliases: ["% critique", "critique", "crit"] },
+  { input: "levelInput", aliases: ["niveau"] },
+];
+
+function normalizeStatImportText(value) {
+  return normalize(value)
+    .replace(/[%+]/g, " ")
+    .replace(/[^\w\s.-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function importedNumberForAlias(line, alias) {
+  const normalizedAlias = normalizeStatImportText(alias);
+  const before = line.match(new RegExp(`(^|\\s)(-?\\d+(?:[.,]\\d+)?)\\s+${normalizedAlias}(\\s|$)`));
+  if (before) return Number(before[2].replace(",", "."));
+
+  const after = line.match(new RegExp(`(^|\\s)${normalizedAlias}\\s+(-?\\d+(?:[.,]\\d+)?)(\\s|$)`));
+  if (after) return Number(after[2].replace(",", "."));
+
+  return null;
+}
+
+function parseStatImport(text) {
+  const values = new Map();
+  const lines = text
+    .split(/\r?\n/)
+    .map(normalizeStatImportText)
+    .filter(Boolean);
+
+  statImportFields.forEach((field) => {
+    for (const line of lines) {
+      for (const alias of field.aliases) {
+        const value = importedNumberForAlias(line, alias);
+        if (value !== null && Number.isFinite(value)) {
+          values.set(field.input, value);
+          return;
+        }
+      }
+    }
+  });
+
+  return values;
+}
+
+function resetQuickBonusesForImport() {
+  elements.parchmentInput.checked = false;
+  elements.vulbisInput.checked = false;
+  elements.nebuleuxInput.checked = false;
+  elements.pourpreInput.value = "0";
+  elements.turquoiseInput.value = "0";
+  state.parchmentApplied = false;
+  state.quickFinalBonus = 0;
+}
+
+function applyStatImport() {
+  const imported = parseStatImport(elements.statImportText.value);
+  if (imported.size === 0) {
+    elements.statImportStatus.textContent = "Aucune stat reconnue.";
+    return;
+  }
+
+  resetQuickBonusesForImport();
+  imported.forEach((value, inputName) => {
+    elements[inputName].value = value;
+  });
+  elements.statImportStatus.textContent = `${imported.size} stats importees.`;
+  renderSelectedSpell();
 }
 
 const dofusDbEffectIcon = (id) => `https://api.dofusdb.fr/img/effects/${id}.png`;
@@ -1531,6 +1624,11 @@ if (elements.spellList && elements.searchInput && elements.damageResult) {
   elements.clearCooldowns.addEventListener("click", () => {
     state.cooldowns.clear();
     render();
+  });
+  elements.applyStatImport.addEventListener("click", applyStatImport);
+  elements.clearStatImport.addEventListener("click", () => {
+    elements.statImportText.value = "";
+    elements.statImportStatus.textContent = "";
   });
 
   Object.values(elements)
