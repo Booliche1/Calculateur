@@ -212,6 +212,36 @@ function extraSpellRecords(className, spell, baseRecord) {
     }];
   }
 
+  const poisonVariants = {
+    13064: {
+      nom: "Fleche de Tourment (poison)",
+      sourceId: "13064-poison",
+      note: "Ligne poison Air de fin de tour de Fleche de Tourment. Les degats directs du vol de vie restent sur Fleche de Tourment.",
+    },
+    12815: {
+      nom: "Distillation (poison)",
+      sourceId: "12815-poison",
+      note: "Ligne poison Eau de debut de tour de Distillation. Les degats du sort et du poison sont augmentes pour chaque poison du sort declenche sur une cible (cumulable 4 fois).",
+    },
+    14584: {
+      nom: "Affliction (poison)",
+      sourceId: "14584-poison",
+      note: "Ligne poison Eau de debut de tour d'Affliction, appliquee si le sort est projete dans un portail.",
+    },
+    14594: {
+      nom: "Extinction (poison)",
+      sourceId: "14594-poison",
+      note: "Ligne poison Feu de fin de tour d'Extinction, appliquee si le sort est projete dans un portail.",
+    },
+  };
+
+  if (poisonVariants[spell.id]) {
+    return [{
+      ...baseRecord,
+      ...poisonVariants[spell.id],
+    }];
+  }
+
   if (spell.id !== 24039) return [];
 
   return [{
