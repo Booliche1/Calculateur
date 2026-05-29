@@ -212,11 +212,23 @@ function extraSpellRecords(className, spell, baseRecord) {
     }];
   }
 
+  if (spell.id === 13064) {
+    baseRecord.min = 25;
+    baseRecord.max = 27;
+    baseRecord.critMin = 30;
+    baseRecord.critMax = 32;
+    baseRecord.note = "Degats directs : 25 a 27 Air, critique 30 a 32 Air.\n" + baseRecord.note;
+  }
+
   const poisonVariants = {
     13064: {
       nom: "Fleche de Tourment (poison)",
+      min: 14,
+      max: 16,
+      critMin: 17,
+      critMax: 19,
       sourceId: "13064-poison",
-      note: "Ligne poison Air de fin de tour de Fleche de Tourment. Les degats directs du vol de vie restent sur Fleche de Tourment.",
+      note: "Poison Air de fin de tour : 14 a 16, critique 17 a 19. Les degats directs du vol de vie restent sur Fleche de Tourment.",
     },
     12815: {
       nom: "Distillation (poison)",
